@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import DropdownMenu from '../components/dropdownMenu';
 import { fetchTopTenItems } from '../redux/slices/itemsSlice';
+import ItemList from '../components/itemList';
+import CategoriesMenu from '../components/categoriesMenu';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -14,18 +15,21 @@ const Home = () => {
 
   return (
     <>
-      <DropdownMenu />
+      <CategoriesMenu />
       {!loading && (
-      <div>
-        <ul>
-          {itemsArr.map((item) => (
-            <li key={item.name}>
-              <p>{item.name}</p>
-              <img src={item.image} alt={item.name} className="h-10" />
-            </li>
-          ))}
-        </ul>
-      </div>
+        <>
+          <ItemList />
+          <div>
+            <ul>
+              {itemsArr.map((item) => (
+                <li key={item.name}>
+                  <p>{item.name}</p>
+                  <img src={item.image} alt={item.name} className="h-10" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
       )}
     </>
   );

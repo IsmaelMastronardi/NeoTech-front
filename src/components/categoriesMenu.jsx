@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories } from '../redux/slices/categoriesSlice';
 
-const DropdownMenu = () => {
+const CategoriesMenu = () => {
   const { loading, categoriesArr } = useSelector((store) => store.categories);
   const [menuOpen, setMenuOpen] = useState(false);
   const dispatch = useDispatch();
@@ -34,7 +34,11 @@ const DropdownMenu = () => {
       <div>
         <ul>
           {categoriesArr.map((category) => (
-            <li key={category.name}>{category.name}</li>
+            <li key={category.name}>
+              <button type="button">
+                {category.name}
+              </button>
+            </li>
           ))}
         </ul>
       </div>
@@ -43,4 +47,4 @@ const DropdownMenu = () => {
   );
 };
 
-export default DropdownMenu;
+export default CategoriesMenu;
