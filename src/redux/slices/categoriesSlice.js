@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { fetchCategoryitems } from './itemsSlice';
 
 const url = 'http://localhost:3000/api/v1/categories';
 
@@ -24,13 +25,14 @@ const categoriesSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchCategories.fulfilled, (state, action) => {
-      state.categoriesArr = [];
-      action.payload.forEach((el) => {
-        state.categoriesArr.push(el);
+    builder
+      .addCase(fetchCategories.fulfilled, (state, action) => {
+        state.categoriesArr = [];
+        action.payload.forEach((el) => {
+          state.categoriesArr.push(el);
+        });
+        state.loading = false;
       });
-      state.loading = false;
-    });
   },
 });
 
