@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories } from '../redux/slices/categoriesSlice';
+import { fetchCategoryitems } from '../redux/slices/itemsSlice';
 
 const CategoriesMenu = () => {
   const { loading, categoriesArr } = useSelector((store) => store.categories);
@@ -35,7 +36,10 @@ const CategoriesMenu = () => {
         <ul>
           {categoriesArr.map((category) => (
             <li key={category.name}>
-              <button type="button">
+              <button
+                type="button"
+                onClick={() => dispatch(fetchCategoryitems(category.id))}
+              >
                 {category.name}
               </button>
             </li>
