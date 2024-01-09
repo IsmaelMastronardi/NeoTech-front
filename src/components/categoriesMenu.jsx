@@ -38,7 +38,10 @@ const CategoriesMenu = () => {
             <li key={category.name}>
               <button
                 type="button"
-                onClick={() => dispatch(fetchCategoryitems(category.id))}
+                onClick={() => {
+                  dispatch(fetchCategoryitems(category.id));
+                  toggleMenu();
+                }}
               >
                 {category.name}
               </button>
