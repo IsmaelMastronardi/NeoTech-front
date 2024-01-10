@@ -6,13 +6,15 @@ import FilterMenu from '../components/filtersMenu';
 
 const Home = () => (
   <>
-    <div className="flex flex-row gap-10 mb-10">
-      <CategoriesMenu />
-      <FilterMenu />
+    <div className="bg-orange-200">
+      <div className="flex flex-row gap-10 mb-10">
+        <CategoriesMenu />
+      </div>
+      <div>
+        <ItemList />
+      </div>
     </div>
-    <div>
-      <ItemList />
-    </div>
+
   </>
 );
 

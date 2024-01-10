@@ -1,5 +1,5 @@
 const FilterMenu = () => {
-  console.log('a');
+  console.log('This is going to go soon, but not yet :D');
   return (
     <button
       type="button"
