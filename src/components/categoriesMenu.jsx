@@ -21,36 +21,36 @@ const CategoriesMenu = () => {
   }
 
   return (
-    <>
-      <div>
+    <div className="relative w-full p-4">
+      <div className="flex flex-col p-2 bg-white rounded-xl">
         <button
           type="button"
-          className="border-2"
+          className="w-full text-start"
           onClick={toggleMenu}
         >
           Categories
         </button>
+        {menuOpen && (
+        <div className="absolute z-10 bg-white left-4 right-4 top-14">
+          <ul className="flex flex-col gap-2">
+            {categoriesArr.map((category) => (
+              <li key={category.name} className="p-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    dispatch(fetchCategoryitems(category.id));
+                    toggleMenu();
+                  }}
+                >
+                  {category.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+        )}
       </div>
-      {menuOpen && (
-      <div>
-        <ul>
-          {categoriesArr.map((category) => (
-            <li key={category.name}>
-              <button
-                type="button"
-                onClick={() => {
-                  dispatch(fetchCategoryitems(category.id));
-                  toggleMenu();
-                }}
-              >
-                {category.name}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      )}
-    </>
+    </div>
   );
 };
 
