@@ -83,7 +83,7 @@ const ItemList = () => {
                 <div className="w-2/3">
                   <p>{item.name}</p>
                   <p>{item.price}</p>
-                  <button type="button" className="">Add To cart</button>
+                  <button type="button" className="p-2 px-6 text-white bg-green-400 rounded-2xl">Add To cart</button>
                 </div>
               </li>
             ))}

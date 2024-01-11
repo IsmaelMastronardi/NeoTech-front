@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import appLogo from '../images/app_logo.png';
 import profile from '../images/profile.png';
+import cart from '../images/cart.png';
 
 const Navigation = () => (
   <>
@@ -11,7 +12,8 @@ const Navigation = () => (
           <li className="flex flex-col justify-center"><NavLink to="/">Products</NavLink></li>
           <li className="flex flex-col justify-center"><NavLink to="/contact">Contact</NavLink></li>
           <li className="flex flex-col justify-center"><NavLink to="/contact">Profile</NavLink></li>
-          <li className=""><NavLink to="/contact"><img src={profile} alt="logo" className="mt-4 h-1/2" /></NavLink></li>
+          <li className=""><NavLink to="/contact"><img src={profile} alt="profile link" className="mt-4 h-1/2" /></NavLink></li>
+          <li className=""><NavLink to="/cart"><img src={cart} alt="cart link" className="mt-4 h-1/2" /></NavLink></li>
         </ul>
       </nav>
     </div>
