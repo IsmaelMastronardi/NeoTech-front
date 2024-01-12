@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
@@ -17,7 +18,8 @@ export const fetchUser = createAsyncThunk('user/show', async () => {
 const initialState = {
   loading: true,
   user: undefined,
-  cart: [],
+  cart: undefined,
+  cartItems: [],
 };
 
 const userSlice = createSlice({
@@ -29,6 +31,8 @@ const userSlice = createSlice({
       state.loading = false;
       state.user = action.payload[0];
       state.cart = action.payload[1];
+      state.cartItems = action.payload[2];
+      console.log(action.payload);
     });
   },
 });
