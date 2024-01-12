@@ -4,12 +4,14 @@ import { fetchCategories } from '../redux/slices/categoriesSlice';
 import { fetchCategoryitems } from '../redux/slices/itemsSlice';
 
 const CategoriesMenu = () => {
-  const { loading, categoriesArr } = useSelector((store) => store.categories);
+  const { loading, fetched, categoriesArr } = useSelector((store) => store.categories);
   const [menuOpen, setMenuOpen] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCategories());
+    if (!fetched) {
+      dispatch(fetchCategories());
+    }
   }, []);
 
   const toggleMenu = () => {
