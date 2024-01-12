@@ -2,15 +2,25 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { fetchTopTenItems } from '../redux/slices/itemsSlice';
+import { addNewItem } from '../redux/slices/userSlice';
+import cart from '../images/cart.png';
 
 const ItemList = () => {
-  const { loading, itemsArr } = useSelector((store) => store.items);
+  const {
+    loading,
+    itemsArr,
+  } = useSelector((store) => store.items);
+  const {
+    oldCartItems,
+    newCartItems,
+  } = useSelector((store) => store.user);
   const [orderMenuOpen, setOrderMenuOpen] = useState(false);
   const [order, setOrder] = useState('all');
   const dispatch = useDispatch();
   const orderByArr = ['all', 'Higher Price', 'Lower Price'];
-
+  const fullCartArr = [...oldCartItems, ...newCartItems];
   useEffect(() => {
     dispatch(fetchTopTenItems());
   }, []);
@@ -21,6 +31,38 @@ const ItemList = () => {
 
   const toggleOrderMenu = () => {
     setOrderMenuOpen(!orderMenuOpen);
+  };
+
+  const addToCart = (item) => {
+    dispatch(addNewItem(item));
+    // let result = 0;
+    // for (let i = 0; i < newCartItems.length; i += 1) {
+    //   if (newCartItems[i].id === item.id) {
+    //     result += 1;
+    //   }
+    // }
+    // for (let i = 0; i < oldCartItems.length; i += 1) {
+    //   if (oldCartItems[i].id === item.id) {
+    //     result += 1;
+    //   }
+    // }
+  };
+
+  const findItem = (item) => {
+    let result = 0;
+    for (let i = 0; i < fullCartArr.length; i += 1) {
+      if (fullCartArr[i].id === item.id) {
+        result += 1;
+      }
+    }
+    if (result >= 1) {
+      return (
+        <NavLink to="/cart" className="h-10 relative">
+          <img src={cart} alt="cart link" className="h-full" />
+          <span className="font-bold bg-red-400 absolute top-5 text-xs px-1 rounded-full left-7">{result}</span>
+        </NavLink>
+      );
+    }
   };
 
   const orderComparator = (a, b) => {
@@ -83,7 +125,16 @@ const ItemList = () => {
                 <div className="w-2/3">
                   <p>{item.name}</p>
                   <p>{item.price}</p>
-                  <button type="button" className="p-2 px-6 text-white bg-green-400 rounded-2xl">Add To cart</button>
+                  <div className="flex justify-around">
+                    <button
+                      type="button"
+                      className="p-2 px-6 text-white bg-green-400 rounded-2xl"
+                      onClick={() => addToCart(item)}
+                    >
+                      Add To cart
+                    </button>
+                    {findItem(item)}
+                  </div>
                 </div>
               </li>
             ))}
