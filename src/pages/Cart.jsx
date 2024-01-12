@@ -1,10 +1,17 @@
+/* eslint-disable no-lone-blocks */
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { fetchUser } from '../redux/slices/userSlice';
 
 const Cart = () => {
-  const { loading, user, cart } = useSelector((store) => store.user);
+  const {
+    loading,
+    user,
+    cart,
+    cartItems,
+  } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -14,6 +21,18 @@ const Cart = () => {
   if (loading) {
     return (
       <p>loading....</p>
+    );
+  }
+  if (cartItems.length === 0) {
+    return (
+      <section className="flex flex-col gap-8 pt-8 text-center">
+        <p>Your cart Is empty</p>
+        <div>
+          <NavLink to="/">
+            <button type="button" className="p-3 text-white bg-blue-400 rounded-2xl">Continue Shopping</button>
+          </NavLink>
+        </div>
+      </section>
     );
   }
   return (
