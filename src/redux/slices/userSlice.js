@@ -17,24 +17,34 @@ export const fetchUser = createAsyncThunk('user/show', async () => {
 
 const initialState = {
   loading: true,
+  userFetched: false,
   user: undefined,
   cart: undefined,
-  cartItems: [],
+  oldCartItems: [],
+  newCartItems: [],
 };
 
 const userSlice = createSlice({
   name: 'cart',
   initialState,
-  reducers: {},
+  reducers: {
+    addNewItem: {
+      reducer: (state, action) => {
+        state.newCartItems.push(action.payload);
+        // console.log('Current newCartItems:', JSON.stringify(state.newCartItems));
+      },
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchUser.fulfilled, (state, action) => {
       state.loading = false;
       state.user = action.payload[0];
       state.cart = action.payload[1];
-      state.cartItems = action.payload[2];
-      console.log(action.payload);
+      state.oldCartItems = action.payload[2];
+      state.userFetched = true;
     });
   },
 });
 
+export const { addNewItem } = userSlice.actions;
 export default userSlice.reducer;
