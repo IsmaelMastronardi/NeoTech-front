@@ -17,6 +17,7 @@ export const fetchCategories = createAsyncThunk('categories/index', async () => 
 
 const initialState = {
   loading: true,
+  fetched: false,
   categoriesArr: [],
 };
 
@@ -32,6 +33,7 @@ const categoriesSlice = createSlice({
           state.categoriesArr.push(el);
         });
         state.loading = false;
+        state.fetched = true;
       });
   },
 });
