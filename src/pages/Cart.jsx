@@ -12,6 +12,11 @@ const Cart = () => {
     cart,
     cartItems,
   } = useSelector((store) => store.user);
+  const {
+    oldCartItems,
+    newCartItems,
+  } = useSelector((store) => store.user);
+  const itemsAmount = [...oldCartItems, ...newCartItems].length;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,7 +28,7 @@ const Cart = () => {
       <p>loading....</p>
     );
   }
-  if (cartItems.length === 0) {
+  if (itemsAmount.length === 0) {
     return (
       <section className="flex flex-col gap-8 pt-8 text-center">
         <p>Your cart Is empty</p>
