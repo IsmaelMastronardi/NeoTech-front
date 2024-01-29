@@ -20,7 +20,7 @@ const Navigation = () => {
             <li className=""><NavLink to="/"><img src={appLogo} alt="logo" className="h-full" /></NavLink></li>
             <li className="flex flex-col justify-center"><NavLink to="/">Products</NavLink></li>
             <li className="flex flex-col justify-center"><NavLink to="/contact">Contact</NavLink></li>
-            <li className=""><NavLink to="/contact"><img src={profile} alt="profile link" className="mt-4 h-1/2" /></NavLink></li>
+            <li className=""><NavLink to="/profile"><img src={profile} alt="profile link" className="mt-4 h-1/2" /></NavLink></li>
             <li className="">
               <NavLink to="/cart" className="relative">
                 <img src={cart} alt="cart link" className="mt-4 h-1/2" />
