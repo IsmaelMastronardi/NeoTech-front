@@ -20,13 +20,12 @@ const Navigation = () => {
             <li className=""><NavLink to="/"><img src={appLogo} alt="logo" className="h-full" /></NavLink></li>
             <li className="flex flex-col justify-center"><NavLink to="/">Products</NavLink></li>
             <li className="flex flex-col justify-center"><NavLink to="/contact">Contact</NavLink></li>
-            <li className="flex flex-col justify-center"><NavLink to="/contact">Profile</NavLink></li>
             <li className=""><NavLink to="/contact"><img src={profile} alt="profile link" className="mt-4 h-1/2" /></NavLink></li>
             <li className="">
               <NavLink to="/cart" className="relative">
                 <img src={cart} alt="cart link" className="mt-4 h-1/2" />
                 {itemsAmount >= 1 && (
-                <span className="font-bold bg-red-400 absolute top-7 text-xs px-1 rounded-full left-5">{itemsAmount}</span>
+                <span className="absolute px-1 text-xs font-bold bg-red-400 rounded-full top-7 left-5">{itemsAmount}</span>
                 )}
               </NavLink>
             </li>
