@@ -31,7 +31,6 @@ const userSlice = createSlice({
     addNewItem: {
       reducer: (state, action) => {
         state.newCartItems.push(action.payload);
-        // console.log('Current newCartItems:', JSON.stringify(state.newCartItems));
       },
     },
   },
