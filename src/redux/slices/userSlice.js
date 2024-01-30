@@ -58,8 +58,6 @@ const userSlice = createSlice({
         state.cart = action.payload[1];
         state.oldCartItems = action.payload[2];
         state.userFetched = true;
-        console.log('Guest user created');
-        console.log(action.payload[2]);
       });
   },
 });
