@@ -5,7 +5,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { fetchUser } from '../redux/slices/userSlice';
+import { createGuestUser, fetchUser } from '../redux/slices/userSlice';
 
 const Cart = () => {
   const {
@@ -14,15 +14,19 @@ const Cart = () => {
     cart,
     cartItems,
   } = useSelector((store) => store.user);
+
   const {
     oldCartItems,
     newCartItems,
   } = useSelector((store) => store.user);
-  const itemsArr = [...oldCartItems, ...newCartItems];
+
+  // const itemsArr = [...oldCartItems, ...newCartItems];
+  const itemsArr = oldCartItems;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUser());
+    dispatch(createGuestUser());
   }, []);
 
   if (loading) {
@@ -44,7 +48,7 @@ const Cart = () => {
   }
   return (
     <section className="flex flex-row justify-center">
-      <ul className="w-10/12 py-10 flex flex-col gap-16">
+      <ul className="flex flex-col w-10/12 gap-16 py-10">
         {itemsArr.map((item) => (
           <li key={item.id} className="border rounded-2xl">
             <div className="py-2 text-center">
@@ -59,14 +63,14 @@ const Cart = () => {
                   <p>{item.description}</p>
                 </div>
                 <div className="flex justify-around">
-                  <button type="button" className="bg-red-400 py-1 px-3 rounded-full"> Delete</button>
+                  <button type="button" className="px-3 py-1 bg-red-400 rounded-full"> Delete</button>
                 </div>
               </div>
             </div>
 
             <div className="flex flex-row justify-around py-4">
               <div className="flex flex-row justify-center">
-                <button type="button" className="border-s border-y text-4xl ">-</button>
+                <button type="button" className="text-4xl border-s border-y ">-</button>
                 <p className="">1</p>
                 <button type="button" className="">+</button>
               </div>

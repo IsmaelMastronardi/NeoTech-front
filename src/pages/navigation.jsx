@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import appLogo from '../images/app_logo.png';
@@ -10,7 +11,8 @@ const Navigation = () => {
     newCartItems,
   } = useSelector((store) => store.user);
 
-  const itemsAmount = [...oldCartItems, ...newCartItems].length;
+  // const itemsAmount = [...oldCartItems, ...newCartItems].length;
+  const itemsAmount = oldCartItems.length;
 
   return (
     <>
