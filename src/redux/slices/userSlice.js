@@ -3,6 +3,7 @@
 /* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { act } from 'react-dom/test-utils';
 
 const url = 'http://localhost:3000/api/v1/';
 
@@ -29,8 +30,8 @@ const initialState = {
   userFetched: false,
   user: undefined,
   cart: undefined,
-  oldCartItems: [],
-  newCartItems: [],
+  orderItems: [],
+  itemCounts: [],
 };
 
 const userSlice = createSlice({
@@ -39,7 +40,10 @@ const userSlice = createSlice({
   reducers: {
     addNewItem: {
       reducer: (state, action) => {
-        state.newCartItems.push(action.payload);
+        const item = action.payload;
+        const id = item.id;
+        state.orderItems.push(item);
+        state.itemCounts[id] = (state.itemCounts[id] || 0) + 1;
       },
     },
   },
@@ -49,14 +53,12 @@ const userSlice = createSlice({
         state.loading = false;
         state.user = action.payload[0];
         state.cart = action.payload[1];
-        state.oldCartItems = action.payload[2];
         state.userFetched = true;
       })
       .addCase(createGuestUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload[0];
         state.cart = action.payload[1];
-        state.oldCartItems = action.payload[2];
         state.userFetched = true;
       });
   },
