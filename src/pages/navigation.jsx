@@ -7,12 +7,10 @@ import cart from '../images/cart.png';
 
 const Navigation = () => {
   const {
-    oldCartItems,
-    newCartItems,
+    orderItems,
   } = useSelector((store) => store.user);
 
-  // const itemsAmount = [...oldCartItems, ...newCartItems].length;
-  const itemsAmount = oldCartItems.length;
+  const itemsAmount = orderItems.length;
 
   return (
     <>
