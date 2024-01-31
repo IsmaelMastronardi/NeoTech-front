@@ -10,38 +10,19 @@ import cart from '../images/cart.png';
 const Item = ({ item }) => {
   const dispatch = useDispatch();
   const {
-    oldCartItems,
-    newCartItems,
+    itemCounts,
   } = useSelector((store) => store.user);
-  const fullCartArr = [...oldCartItems, ...newCartItems];
 
   const addToCart = (item) => {
     dispatch(addNewItem(item));
-    // let result = 0;
-    // for (let i = 0; i < newCartItems.length; i += 1) {
-    //   if (newCartItems[i].id === item.id) {
-    //     result += 1;
-    //   }
-    // }
-    // for (let i = 0; i < oldCartItems.length; i += 1) {
-    //   if (oldCartItems[i].id === item.id) {
-    //     result += 1;
-    //   }
-    // }
   };
 
   const findItem = (item) => {
-    let result = 0;
-    for (let i = 0; i < fullCartArr.length; i += 1) {
-      if (fullCartArr[i].id === item.id) {
-        result += 1;
-      }
-    }
-    if (result >= 1) {
+    if (itemCounts[item.id] > 0) {
       return (
         <NavLink to="/cart" className="relative h-10">
           <img src={cart} alt="cart link" className="h-full" />
-          <span className="absolute px-1 text-xs font-bold bg-red-400 rounded-full top-5 left-7">{result}</span>
+          <span className="absolute px-1 text-xs font-bold bg-red-400 rounded-full top-5 left-7">{itemCounts[item.id]}</span>
         </NavLink>
       );
     }
