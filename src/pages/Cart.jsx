@@ -12,16 +12,10 @@ const Cart = () => {
     loading,
     user,
     cart,
-    cartItems,
+    orderItems,
   } = useSelector((store) => store.user);
 
-  const {
-    oldCartItems,
-    newCartItems,
-  } = useSelector((store) => store.user);
-
-  // const itemsArr = [...oldCartItems, ...newCartItems];
-  const itemsArr = oldCartItems;
+  const itemsArr = orderItems;
 
   const dispatch = useDispatch();
 
