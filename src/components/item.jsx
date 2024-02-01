@@ -14,10 +14,14 @@ const Item = ({ item }) => {
   } = useSelector((store) => store.user);
 
   const addToCart = (item) => {
-    dispatch(addNewItemAndSave(item));
+    dispatch(addNewItemAndSave(item, 'addItem'));
   };
 
-  const findItem = (item) => {
+  const removeFromCart = (item) => {
+    dispatch(addNewItemAndSave(item, 'removeItem'));
+  };
+
+  const showCartItemQuantity = (item) => {
     if (orderItems[item.name] > 0) {
       return (
         <NavLink to="/cart" className="relative h-10">
@@ -42,7 +46,16 @@ const Item = ({ item }) => {
           >
             Add To cart
           </button>
-          {findItem(item)}
+          {orderItems[item.name] > 0 && (
+            <button
+              type="button"
+              className="p-2 px-6 text-white bg-red-400 rounded-2xl"
+              onClick={() => removeFromCart(item)}
+            >
+              Remove
+            </button>
+          )}
+          {showCartItemQuantity(item)}
         </div>
       </div>
     </li>
