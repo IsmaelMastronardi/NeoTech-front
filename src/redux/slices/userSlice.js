@@ -24,13 +24,35 @@ export const createGuestUser = createAsyncThunk('user/create', async () => {
   }
 });
 
-const initialState = {
+const saveStateToLocalStorage = (state) => {
+  try {
+    const serializedState = JSON.stringify(state);
+    localStorage.setItem('userState', serializedState);
+  } catch (error) {
+    console.error('Error saving state to local storage:', error);
+  }
+};
+
+const loadStateFromLocalStorage = () => {
+  try {
+    const serializedState = localStorage.getItem('userState');
+    if (serializedState === null) {
+      return undefined;
+    }
+    return JSON.parse(serializedState);
+  } catch (error) {
+    console.error('Error loading state from local storage:', error);
+    return undefined;
+  }
+};
+
+const initialState = loadStateFromLocalStorage() || {
   loading: true,
   userFetched: false,
-  user: undefined,
-  cart: undefined,
-  orderItems: [],
-  itemCounts: [],
+  user: null,
+  cart: null,
+  orderItems: {},
+  itemsCount: 0,
 };
 
 const userSlice = createSlice({
@@ -41,8 +63,8 @@ const userSlice = createSlice({
       reducer: (state, action) => {
         const item = action.payload;
         const id = item.id;
-        state.orderItems.push(item);
-        state.itemCounts[id] = (state.itemCounts[id] || 0) + 1;
+        state.orderItems[item.name] = (state.orderItems[item.name] ?? 0) + 1;
+        state.itemsCount += 1;
       },
     },
   },
@@ -62,6 +84,14 @@ const userSlice = createSlice({
       });
   },
 });
+
+export const addNewItemAndSave = (item) => (dispatch, getState) => {
+  dispatch(userSlice.actions.addNewItem(item));
+
+  const updatedState = getState().user;
+
+  saveStateToLocalStorage(updatedState);
+};
 
 export const { addNewItem } = userSlice.actions;
 export default userSlice.reducer;
