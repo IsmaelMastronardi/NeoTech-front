@@ -59,12 +59,24 @@ const userSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addNewItem: {
+    addItem: {
       reducer: (state, action) => {
         const item = action.payload;
         const id = item.id;
         state.orderItems[item.name] = (state.orderItems[item.name] ?? 0) + 1;
         state.itemsCount += 1;
+      },
+    },
+    removeItem: {
+      reducer: (state, action) => {
+        const item = action.payload;
+        const id = item.id;
+        if (state.orderItems[item.name] - 1 === 0) {
+          delete state.orderItems[item.name];
+        } else {
+          state.orderItems[item.name] = (state.orderItems[item.name] ?? 0) - 1;
+        }
+        state.itemsCount -= 1;
       },
     },
   },
@@ -85,8 +97,12 @@ const userSlice = createSlice({
   },
 });
 
-export const addNewItemAndSave = (item) => (dispatch, getState) => {
-  dispatch(userSlice.actions.addNewItem(item));
+export const addNewItemAndSave = (item, action) => (dispatch, getState) => {
+  if (action === 'addItem') {
+    dispatch(userSlice.actions.addItem(item));
+  } else if (action === 'removeItem') {
+    dispatch(userSlice.actions.removeItem(item));
+  }
 
   const updatedState = getState().user;
 
