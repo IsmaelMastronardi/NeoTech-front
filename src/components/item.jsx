@@ -4,25 +4,25 @@
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { addNewItem } from '../redux/slices/userSlice';
 import cart from '../images/cart.png';
+import { addNewItemAndSave } from '../redux/slices/userSlice';
 
 const Item = ({ item }) => {
   const dispatch = useDispatch();
   const {
-    itemCounts,
+    orderItems,
   } = useSelector((store) => store.user);
 
   const addToCart = (item) => {
-    dispatch(addNewItem(item));
+    dispatch(addNewItemAndSave(item));
   };
 
   const findItem = (item) => {
-    if (itemCounts[item.id] > 0) {
+    if (orderItems[item.name] > 0) {
       return (
         <NavLink to="/cart" className="relative h-10">
           <img src={cart} alt="cart link" className="h-full" />
-          <span className="absolute px-1 text-xs font-bold bg-red-400 rounded-full top-5 left-7">{itemCounts[item.id]}</span>
+          <span className="absolute px-1 text-xs font-bold bg-red-400 rounded-full top-5 left-7">{orderItems[item.name]}</span>
         </NavLink>
       );
     }
