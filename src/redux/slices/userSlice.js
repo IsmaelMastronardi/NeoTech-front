@@ -3,7 +3,6 @@
 /* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { act } from 'react-dom/test-utils';
 
 const url = 'http://localhost:3000/api/v1/';
 
