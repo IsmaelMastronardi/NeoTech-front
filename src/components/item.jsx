@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import cart from '../images/cart.png';
-import { addNewItemAndSave } from '../redux/slices/userSlice';
+import { addNewItemAndSave } from '../redux/slices/orderSlice';
 
 const Item = ({ item }) => {
   const dispatch = useDispatch();
   const {
     orderItems,
-  } = useSelector((store) => store.user);
+  } = useSelector((store) => store.order);
 
   const addToCart = (item) => {
     dispatch(addNewItemAndSave(item, 'addItem'));
