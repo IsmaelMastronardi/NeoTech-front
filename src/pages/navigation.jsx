@@ -8,7 +8,7 @@ import cart from '../images/cart.png';
 const Navigation = () => {
   const {
     itemsCount,
-  } = useSelector((store) => store.user);
+  } = useSelector((store) => store.order);
 
   return (
     <>
