@@ -17,7 +17,7 @@ function App() {
     if (localStorage.getItem('userState') === null) {
       dispatch(createGuestUser());
     } else {
-      fetchUser(localStorage.getItem('userState'));
+      dispatch(fetchUser(JSON.parse(localStorage.getItem('userState'))));
     }
   }, []);
 
