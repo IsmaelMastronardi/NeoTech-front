@@ -1,5 +1,16 @@
-/* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+const url = 'http://localhost:3000/api/v1/';
+
+export const completeOrder = createAsyncThunk('order/complete', async (order) => {
+  try {
+    const response = await axios.post(`${url}orders`, order);
+    return response.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+});
 
 const saveStateToLocalStorage = (state) => {
   try {
@@ -37,17 +48,21 @@ const orderSlice = createSlice({
     addItem: {
       reducer: (state, action) => {
         const item = action.payload;
-        state.orderItems[item.name] = (state.orderItems[item.name] ?? 0) + 1;
+        if (!state.orderItems[item.name]) {
+          state.orderItems[item.name] = { item, quantity: 1 };
+        } else {
+          state.orderItems[item.name].quantity += 1;
+        }
         state.itemsCount += 1;
       },
     },
     removeItem: {
       reducer: (state, action) => {
         const item = action.payload;
-        if (state.orderItems[item.name] - 1 === 0) {
+        if (state.orderItems[item.name].quantity === 1) {
           delete state.orderItems[item.name];
         } else {
-          state.orderItems[item.name] = (state.orderItems[item.name] ?? 0) - 1;
+          state.orderItems[item.name].quantity -= 1;
         }
         state.itemsCount -= 1;
       },
