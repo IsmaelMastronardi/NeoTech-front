@@ -6,9 +6,9 @@ import axios from 'axios';
 
 const url = 'http://localhost:3000/api/v1/';
 
-export const fetchUser = createAsyncThunk('user/show', async () => {
+export const fetchUser = createAsyncThunk('user/show', async (user) => {
   try {
-    const response = await axios(`${url}users/64`);
+    const response = await axios(`${url}users/${user.id}`);
     return response.data;
   } catch (error) {
     throw new Error(error);
@@ -24,16 +24,16 @@ export const createGuestUser = createAsyncThunk('user/create', async () => {
   }
 });
 
-const saveStateToLocalStorage = (state) => {
+const saveUserToLocalStorage = (state) => {
   try {
-    const serializedState = JSON.stringify(state);
+    const serializedState = JSON.stringify(state.user);
     localStorage.setItem('userState', serializedState);
   } catch (error) {
     console.error('Error saving state to local storage:', error);
   }
 };
 
-const loadStateFromLocalStorage = () => {
+const loadUserFromLocalStorage = () => {
   try {
     const serializedState = localStorage.getItem('userState');
     if (serializedState === null) {
@@ -46,68 +46,32 @@ const loadStateFromLocalStorage = () => {
   }
 };
 
-const initialState = loadStateFromLocalStorage() || {
+const initialState = {
   loading: true,
   userFetched: false,
   user: null,
-  cart: null,
-  orderItems: {},
-  itemsCount: 0,
 };
 
 const userSlice = createSlice({
-  name: 'cart',
+  name: 'user',
   initialState,
   reducers: {
-    addItem: {
-      reducer: (state, action) => {
-        const item = action.payload;
-        const id = item.id;
-        state.orderItems[item.name] = (state.orderItems[item.name] ?? 0) + 1;
-        state.itemsCount += 1;
-      },
-    },
-    removeItem: {
-      reducer: (state, action) => {
-        const item = action.payload;
-        const id = item.id;
-        if (state.orderItems[item.name] - 1 === 0) {
-          delete state.orderItems[item.name];
-        } else {
-          state.orderItems[item.name] = (state.orderItems[item.name] ?? 0) - 1;
-        }
-        state.itemsCount -= 1;
-      },
-    },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload[0];
-        state.cart = action.payload[1];
         state.userFetched = true;
       })
       .addCase(createGuestUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload[0];
-        state.cart = action.payload[1];
         state.userFetched = true;
+        saveUserToLocalStorage(state);
       });
   },
 });
 
-export const addNewItemAndSave = (item, action) => (dispatch, getState) => {
-  if (action === 'addItem') {
-    dispatch(userSlice.actions.addItem(item));
-  } else if (action === 'removeItem') {
-    dispatch(userSlice.actions.removeItem(item));
-  }
-
-  const updatedState = getState().user;
-
-  saveStateToLocalStorage(updatedState);
-};
-
-export const { addNewItem } = userSlice.actions;
 export default userSlice.reducer;
