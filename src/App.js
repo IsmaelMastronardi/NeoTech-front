@@ -1,13 +1,26 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Home from './pages/Home';
 import Contact from './pages/Contact';
 import Navigation from './pages/Navigation';
 import Cart from './pages/Cart';
 import Profile from './pages/Profile';
+import { createGuestUser, fetchUser } from './redux/slices/userSlice';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem('userState') === null) {
+      dispatch(createGuestUser());
+    } else {
+      fetchUser(localStorage.getItem('userState'));
+    }
+  }, []);
+
   return (
     <>
       <BrowserRouter>
