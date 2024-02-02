@@ -1,38 +1,21 @@
 /* eslint-disable no-unused-vars */
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { fetchTopTenItems } from '../redux/slices/itemsSlice';
+import { useState } from 'react';
 import ItemList from '../components/itemList';
 import CategoriesMenu from '../components/categoriesMenu';
+import FilterMenu from '../components/filtersMenu';
 
-const Home = () => {
-  const dispatch = useDispatch();
-  const { loading, itemsArr } = useSelector((store) => store.items);
+const Home = () => (
+  <>
+    <div className="bg-orange-200">
+      <div className="flex flex-row gap-10 mb-10">
+        <CategoriesMenu />
+      </div>
+      <div>
+        <ItemList />
+      </div>
+    </div>
 
-  useEffect(() => {
-    dispatch(fetchTopTenItems());
-  }, []);
-
-  return (
-    <>
-      <CategoriesMenu />
-      {!loading && (
-        <>
-          <ItemList />
-          <div>
-            <ul>
-              {itemsArr.map((item) => (
-                <li key={item.name}>
-                  <p>{item.name}</p>
-                  <img src={item.image} alt={item.name} className="h-10" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </>
-      )}
-    </>
-  );
-};
+  </>
+);
 
 export default Home;
