@@ -23,7 +23,7 @@ export const fetchCategoryitems = createAsyncThunk('categories/show', async (cat
 });
 
 const initialState = {
-  loading: true,
+  itemsLoading: true,
   itemsArr: [],
 };
 
@@ -35,11 +35,11 @@ const itemSlice = createSlice({
     builder
       .addCase(fetchTopTenItems.fulfilled, (state, action) => {
         state.itemsArr = action.payload;
-        state.loading = false;
+        state.itemsLoading = false;
       })
       .addCase(fetchCategoryitems.fulfilled, (state, action) => {
         state.itemsArr = action.payload;
-        state.loading = false;
+        state.itemsLoading = false;
       });
   },
 
