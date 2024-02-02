@@ -17,12 +17,6 @@ const Cart = () => {
 
   const itemsArr = orderItems;
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(createGuestUser());
-  }, []);
-
   if (loading) {
     return (
       <p>loading....</p>
