@@ -67,6 +67,13 @@ const orderSlice = createSlice({
         state.itemsCount -= 1;
       },
     },
+    deleteItem: {
+      reducer: (state, action) => {
+        const item = action.payload;
+        state.itemsCount -= state.orderItems[item.name].quantity;
+        delete state.orderItems[item.name];
+      },
+    },
   },
 });
 
@@ -75,6 +82,8 @@ export const addNewItemAndSave = (item, action = 'default') => (dispatch, getSta
     dispatch(orderSlice.actions.addItem(item));
   } else if (action === 'removeItem') {
     dispatch(orderSlice.actions.removeItem(item));
+  } else if (action === 'deleteItem') {
+    dispatch(orderSlice.actions.deleteItem(item));
   }
 
   const updatedState = getState().order;
