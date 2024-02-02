@@ -22,11 +22,11 @@ const Item = ({ item }) => {
   };
 
   const showCartItemQuantity = (item) => {
-    if (orderItems[item.name] > 0) {
+    if (orderItems[item.name] && orderItems[item.name].quantity > 0) {
       return (
         <NavLink to="/cart" className="relative h-10">
           <img src={cart} alt="cart link" className="h-full" />
-          <span className="absolute px-1 text-xs font-bold bg-red-400 rounded-full top-5 left-7">{orderItems[item.name]}</span>
+          <span className="absolute px-1 text-xs font-bold bg-red-400 rounded-full top-5 left-7">{orderItems[item.name].quantity}</span>
         </NavLink>
       );
     }
@@ -46,7 +46,7 @@ const Item = ({ item }) => {
           >
             Add To cart
           </button>
-          {orderItems[item.name] > 0 && (
+          {orderItems[item.name] && orderItems[item.name].quantity > 0 && (
             <button
               type="button"
               className="p-2 px-6 text-white bg-red-400 rounded-2xl"
