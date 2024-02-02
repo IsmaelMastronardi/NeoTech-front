@@ -5,10 +5,10 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Home from './pages/Home';
 import Contact from './pages/Contact';
-import Navigation from './pages/Navigation';
 import Cart from './pages/Cart';
 import Profile from './pages/Profile';
 import { createGuestUser, fetchUser } from './redux/slices/userSlice';
+import Navigation from './pages/navigation';
 
 function App() {
   const dispatch = useDispatch();
