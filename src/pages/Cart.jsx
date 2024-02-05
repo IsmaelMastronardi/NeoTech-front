@@ -1,13 +1,10 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable no-lone-blocks */
-/* eslint-disable no-unused-vars */
-import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { createGuestUser, fetchUser } from '../redux/slices/userSlice';
+import { addNewItemAndSave, completeOrder } from '../redux/slices/orderSlice';
 
 const Cart = () => {
+  const dispatch = useDispatch();
+
   const {
     loading,
   } = useSelector((store) => store.user);
@@ -17,12 +14,25 @@ const Cart = () => {
     itemsCount,
   } = useSelector((store) => store.order);
 
-  const {
-    itemsArr,
-    itemsLoading,
-  } = useSelector((store) => store.items);
+  const addToCart = (item) => {
+    dispatch(addNewItemAndSave(item, 'addItem'));
+  };
 
-  if (loading || itemsLoading) {
+  const removeFromCart = (item, quantity) => {
+    if (quantity > 1) {
+      dispatch(addNewItemAndSave(item, 'removeItem'));
+    }
+  };
+
+  const deleteFromCart = (item) => {
+    dispatch(addNewItemAndSave(item, 'deleteItem'));
+  };
+
+  const handleCompleteOrder = (order) => {
+    dispatch(completeOrder(order));
+  };
+
+  if (loading) {
     return (
       <p>loading....</p>
     );
@@ -41,42 +51,66 @@ const Cart = () => {
     );
   }
   return (
-    <section className="flex flex-row justify-center">
+    <section className="flex flex-col items-center justify-center">
       <ul className="flex flex-col w-10/12 gap-16 py-10">
-        {itemsArr.map((item) => {
-          if (orderItems[item.name]) {
-            return (
-              <li key={item.id} className="border rounded-2xl">
-                <div className="py-2 text-center">
-                  <p className="text-2xl">{item.name}</p>
+        {Object.values(orderItems).map((orderItem) => {
+          const { item } = orderItem;
+          const { quantity } = orderItem;
+          return (
+            <li key={item.id} className="border rounded-2xl">
+              <div className="py-2 text-center">
+                <p className="text-2xl">{item.name}</p>
+              </div>
+              <div className="flex flex-row gap-2">
+                <div className="w-1/2">
+                  <img src={item.image} alt={`${item.name}`} />
                 </div>
-                <div className="flex flex-row gap-2">
-                  <div className="w-1/2">
-                    <img src={item.image} alt={`${item.name}`} />
+                <div className="flex flex-col justify-between text-center">
+                  <div className="">
+                    <p>{item.description}</p>
                   </div>
-                  <div className="flex flex-col justify-between text-center">
-                    <div className="">
-                      <p>{item.description}</p>
-                    </div>
-                    <div className="flex justify-around">
-                      <button type="button" className="px-3 py-1 bg-red-400 rounded-full"> Delete</button>
-                    </div>
+                  <div className="flex justify-around">
+                    <button
+                      type="button"
+                      className="px-3 py-1 bg-red-400 rounded-full"
+                      onClick={() => deleteFromCart(item)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
-                <div className="flex flex-row justify-around py-4">
-                  <div className="flex flex-row justify-center">
-                    <button type="button" className="text-4xl border-s border-y ">-</button>
-                    <p className="">1</p>
-                    <button type="button" className="">+</button>
-                  </div>
-                  <p>{item.price}</p>
+              </div>
+              <div className="flex flex-row justify-around py-4">
+                <div className="flex flex-row justify-center">
+                  <button
+                    type="button"
+                    className={`text-4xl ${quantity === 1 ? 'text-gray-100' : ''}`}
+                    onClick={() => removeFromCart(item, quantity)}
+                  >
+                    -
+                  </button>
+                  <p className="">{quantity}</p>
+                  <button
+                    type="button"
+                    className=""
+                    onClick={() => addToCart(item)}
+                  >
+                    +
+                  </button>
                 </div>
-              </li>
-            );
-          }
-          return null;
+                <p>{item.price}</p>
+              </div>
+            </li>
+          );
         })}
       </ul>
+      <button
+        type="button"
+        className="px-3 py-1 bg-green-400 rounded-full"
+        onClick={() => handleCompleteOrder(orderItems)}
+      >
+        Complete Order
+      </button>
     </section>
   );
 };

@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable prefer-destructuring */
-/* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -33,19 +30,6 @@ const saveUserToLocalStorage = (state) => {
   }
 };
 
-const loadUserFromLocalStorage = () => {
-  try {
-    const serializedState = localStorage.getItem('userState');
-    if (serializedState === null) {
-      return undefined;
-    }
-    return JSON.parse(serializedState);
-  } catch (error) {
-    console.error('Error loading state from local storage:', error);
-    return undefined;
-  }
-};
-
 const initialState = {
   loading: true,
   userFetched: false,
@@ -62,12 +46,12 @@ const userSlice = createSlice({
     builder
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload[0];
+        [state.user] = action.payload;
         state.userFetched = true;
       })
       .addCase(createGuestUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload[0];
+        [state.user] = action.payload;
         state.userFetched = true;
         saveUserToLocalStorage(state);
       });
