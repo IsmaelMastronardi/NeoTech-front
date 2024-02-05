@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTopTenItems } from '../redux/slices/itemsSlice';
@@ -34,6 +32,7 @@ const ItemList = () => {
     if (order === 'Higher Price') {
       return (b.price - a.price);
     }
+    return 0;
   };
 
   if (loading) {
@@ -42,54 +41,51 @@ const ItemList = () => {
     );
   }
 
-  if (!loading) {
-    const itemsArrCopy = [...itemsArr];
-    if (order !== 'all') {
-      itemsArrCopy.sort(orderComparator);
-    }
-    return (
-      <>
-        <div className="relative w-full p-4">
-          <div className="flex flex-col p-2 bg-white rounded-xl">
-            <button
-              type="button"
-              className="w-full text-start"
-              onClick={() => toggleOrderMenu()}
-            >
-              Order By
-            </button>
-            <div className="absolute bg-white left-4 right-4 top-14">
-              {orderMenuOpen && (
-              <ul className="z-10 flex flex-col gap-2">
-                {orderByArr.map((order) => (
-                  <li key={order} className="p-2">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        chooseOrder(order);
-                        toggleOrderMenu();
-                      }}
-                    >
-                      {order}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-              )}
-            </div>
+  const itemsArrCopy = [...itemsArr];
+  if (order !== 'all') {
+    itemsArrCopy.sort(orderComparator);
+  }
+  return (
+    <>
+      <div className="relative w-full p-4">
+        <div className="flex flex-col p-2 bg-white rounded-xl">
+          <button
+            type="button"
+            className="w-full text-start"
+            onClick={() => toggleOrderMenu()}
+          >
+            Order By
+          </button>
+          <div className="absolute bg-white left-4 right-4 top-14">
+            {orderMenuOpen && (
+            <ul className="z-10 flex flex-col gap-2">
+              {orderByArr.map((order) => (
+                <li key={order} className="p-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      chooseOrder(order);
+                      toggleOrderMenu();
+                    }}
+                  >
+                    {order}
+                  </button>
+                </li>
+              ))}
+            </ul>
+            )}
           </div>
         </div>
-        <div className="w-full p-4 ">
-          <ul className="flex flex-col content-center justify-center w-full bg-white rounded-xl">
-            {itemsArrCopy.map((item, index) => (
-              <Item item={item} key={item + item.id} />
-            ))}
-          </ul>
-        </div>
-
-      </>
-    );
-  }
+      </div>
+      <div className="w-full p-4 ">
+        <ul className="flex flex-col content-center justify-center w-full bg-white rounded-xl">
+          {itemsArrCopy.map((item) => (
+            <Item item={item} key={item + item.id} />
+          ))}
+        </ul>
+      </div>
+    </>
+  );
 };
 
 export default ItemList;

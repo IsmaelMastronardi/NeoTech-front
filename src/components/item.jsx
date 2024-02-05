@@ -1,6 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable no-undef */
-/* eslint-disable consistent-return */
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
@@ -30,6 +27,7 @@ const Item = ({ item }) => {
         </NavLink>
       );
     }
+    return null;
   };
 
   return (

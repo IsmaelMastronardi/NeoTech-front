@@ -1,11 +1,10 @@
-/* eslint-disable no-unused-vars */
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPastOrders } from '../redux/slices/orderSlice';
 
 const PastOrders = () => {
   const { pastOrdersLoading, pastOrdersArray } = useSelector((store) => store.order);
-  const { user, loading } = useSelector((store) => store.user);
+  const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
