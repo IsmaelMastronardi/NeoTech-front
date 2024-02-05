@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { useEffect } from 'react';

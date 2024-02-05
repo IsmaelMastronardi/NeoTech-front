@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import appLogo from '../images/app_logo.png';

@@ -1,8 +1,5 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { fetchCategoryitems } from './itemsSlice';
 
 const url = 'http://localhost:3000/api/v1/categories';
 

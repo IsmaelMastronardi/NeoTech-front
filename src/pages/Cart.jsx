@@ -1,7 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable no-lone-blocks */
-/* eslint-disable no-unused-vars */
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { addNewItemAndSave, completeOrder } from '../redux/slices/orderSlice';
@@ -33,7 +29,6 @@ const Cart = () => {
   };
 
   const handleCompleteOrder = (order) => {
-    console.log('order', order);
     dispatch(completeOrder(order));
   };
 
