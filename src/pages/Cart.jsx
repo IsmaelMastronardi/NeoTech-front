@@ -4,7 +4,7 @@
 /* eslint-disable no-unused-vars */
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { addNewItemAndSave } from '../redux/slices/orderSlice';
+import { addNewItemAndSave, completeOrder } from '../redux/slices/orderSlice';
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -32,6 +32,11 @@ const Cart = () => {
     dispatch(addNewItemAndSave(item, 'deleteItem'));
   };
 
+  const handleCompleteOrder = (order) => {
+    console.log('order', order);
+    dispatch(completeOrder(order));
+  };
+
   if (loading) {
     return (
       <p>loading....</p>
@@ -51,7 +56,7 @@ const Cart = () => {
     );
   }
   return (
-    <section className="flex flex-row justify-center">
+    <section className="flex flex-col items-center justify-center">
       <ul className="flex flex-col w-10/12 gap-16 py-10">
         {Object.values(orderItems).map((orderItem) => {
           const { item } = orderItem;
@@ -104,6 +109,13 @@ const Cart = () => {
           );
         })}
       </ul>
+      <button
+        type="button"
+        className="px-3 py-1 bg-green-400 rounded-full"
+        onClick={() => handleCompleteOrder(orderItems)}
+      >
+        Complete Order
+      </button>
     </section>
   );
 };
