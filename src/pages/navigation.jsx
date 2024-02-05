@@ -7,10 +7,8 @@ import cart from '../images/cart.png';
 
 const Navigation = () => {
   const {
-    orderItems,
-  } = useSelector((store) => store.user);
-
-  const itemsAmount = orderItems.length;
+    itemsCount,
+  } = useSelector((store) => store.order);
 
   return (
     <>
@@ -24,8 +22,8 @@ const Navigation = () => {
             <li className="">
               <NavLink to="/cart" className="relative">
                 <img src={cart} alt="cart link" className="mt-4 h-1/2" />
-                {itemsAmount >= 1 && (
-                <span className="absolute px-1 text-xs font-bold bg-red-400 rounded-full top-7 left-5">{itemsAmount}</span>
+                {itemsCount >= 1 && (
+                <span className="absolute px-1 text-xs font-bold bg-red-400 rounded-full top-7 left-5">{itemsCount}</span>
                 )}
               </NavLink>
             </li>

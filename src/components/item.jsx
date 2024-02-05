@@ -4,25 +4,29 @@
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { addNewItem } from '../redux/slices/userSlice';
 import cart from '../images/cart.png';
+import { addNewItemAndSave } from '../redux/slices/orderSlice';
 
 const Item = ({ item }) => {
   const dispatch = useDispatch();
   const {
-    itemCounts,
-  } = useSelector((store) => store.user);
+    orderItems,
+  } = useSelector((store) => store.order);
 
   const addToCart = (item) => {
-    dispatch(addNewItem(item));
+    dispatch(addNewItemAndSave(item, 'addItem'));
   };
 
-  const findItem = (item) => {
-    if (itemCounts[item.id] > 0) {
+  const removeFromCart = (item) => {
+    dispatch(addNewItemAndSave(item, 'removeItem'));
+  };
+
+  const showCartItemQuantity = (item) => {
+    if (orderItems[item.name] && orderItems[item.name].quantity > 0) {
       return (
         <NavLink to="/cart" className="relative h-10">
           <img src={cart} alt="cart link" className="h-full" />
-          <span className="absolute px-1 text-xs font-bold bg-red-400 rounded-full top-5 left-7">{itemCounts[item.id]}</span>
+          <span className="absolute px-1 text-xs font-bold bg-red-400 rounded-full top-5 left-7">{orderItems[item.name].quantity}</span>
         </NavLink>
       );
     }
@@ -42,7 +46,16 @@ const Item = ({ item }) => {
           >
             Add To cart
           </button>
-          {findItem(item)}
+          {orderItems[item.name] && orderItems[item.name].quantity > 0 && (
+            <button
+              type="button"
+              className="p-2 px-6 text-white bg-red-400 rounded-2xl"
+              onClick={() => removeFromCart(item)}
+            >
+              Remove
+            </button>
+          )}
+          {showCartItemQuantity(item)}
         </div>
       </div>
     </li>
