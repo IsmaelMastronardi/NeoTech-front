@@ -21,7 +21,7 @@ const Navigation = () => {
               <NavLink to="/cart" className="relative">
                 <img src={cartIcon} alt="cart link" className="h-full" />
                 {itemsCount >= 1 && (
-                <span className="absolute px-1 text-xs font-bold bg-red-400 rounded-full top-7 left-5">{itemsCount}</span>
+                <span className="absolute top-0 px-1 text-xs font-bold rounded-full bg-custom-red text-verdigray left-7">{itemsCount}</span>
                 )}
               </NavLink>
             </li>
