@@ -7,7 +7,6 @@ const CategoriesMenu = () => {
   const { loading, fetched, categoriesArr } = useSelector((store) => store.categories);
   const [menuOpen, setMenuOpen] = useState(false);
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (!fetched) {
       dispatch(fetchCategories());
@@ -19,12 +18,23 @@ const CategoriesMenu = () => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="relative w-full p-4">
+        <div className="flex flex-col p-2 text-verdigris">
+          <button
+            type="button"
+            className="w-full text-start"
+          >
+            Loading...
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="relative w-full p-4">
-      <div className="flex flex-col p-2 bg-white rounded-xl">
+      <div className="flex flex-col p-2 pl-4 border-2 text-verdigris border-oxford-blue">
         <button
           type="button"
           className="w-full text-start"
