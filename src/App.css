@@ -1,5 +1,17 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
 html,
 body {
   margin: 0;
   height: 100%;
+}
+
+.addButton {
+  @apply p-1 px-4 font-bold text-black transition-colors duration-75 rounded-md shadow-sm bg-fluorescent-cyan shadow-current active:bg-ligther-verdigris hover:bg-verdigris;
+}
+
+.removeButton {
+  @apply p-1 px-4 font-bold text-black transition-colors duration-75 rounded-md shadow-sm bg-custom-red shadow-current hover:bg-dark-red active:bg-light-red;
 }

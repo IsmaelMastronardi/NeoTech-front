@@ -3,11 +3,11 @@ import './App.css';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Home from './pages/Home';
-import Contact from './pages/Contact';
 import Cart from './pages/Cart';
 import Profile from './pages/Profile';
 import { createGuestUser, fetchUser } from './redux/slices/userSlice';
 import Navigation from './pages/navigation';
+import ItemDetails from './pages/ItemDetails';
 
 function App() {
   const dispatch = useDispatch();
@@ -21,17 +21,17 @@ function App() {
   }, []);
 
   return (
-    <>
+    <main className="font-proxima-nova">
       <BrowserRouter>
         <Navigation />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/:id" element={<ItemDetails />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </main>
   );
 }
 
