@@ -21,9 +21,20 @@ export const fetchCategoryitems = createAsyncThunk('categories/show', async (cat
   }
 });
 
+export const fetchItem = createAsyncThunk('items/show', async (itemId) => {
+  try {
+    const response = await axios(`${url}items/${itemId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('error');
+  }
+});
+
 const initialState = {
   itemsLoading: true,
   itemsArr: [],
+  item: null,
+  itemLoading: true,
 };
 
 const itemSlice = createSlice({
@@ -39,6 +50,14 @@ const itemSlice = createSlice({
       .addCase(fetchCategoryitems.fulfilled, (state, action) => {
         state.itemsArr = action.payload;
         state.itemsLoading = false;
+      })
+      .addCase(fetchItem.pending, (state) => {
+        state.item = null;
+        state.itemLoading = true;
+      })
+      .addCase(fetchItem.fulfilled, (state, action) => {
+        state.item = action.payload;
+        state.itemLoading = false;
       });
   },
 
