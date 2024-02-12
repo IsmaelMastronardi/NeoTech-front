@@ -1,64 +1,22 @@
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import cart from '../images/cart.png';
-import { addNewItemAndSave } from '../redux/slices/orderSlice';
 
-const Item = ({ item }) => {
-  const dispatch = useDispatch();
-  const {
-    orderItems,
-  } = useSelector((store) => store.order);
-
-  const addToCart = (item) => {
-    dispatch(addNewItemAndSave(item, 'addItem'));
-  };
-
-  const removeFromCart = (item) => {
-    dispatch(addNewItemAndSave(item, 'removeItem'));
-  };
-
-  const showCartItemQuantity = (item) => {
-    if (orderItems[item.name] && orderItems[item.name].quantity > 0) {
-      return (
-        <NavLink to="/cart" className="relative h-10">
-          <img src={cart} alt="cart link" className="h-full" />
-          <span className="absolute px-1 text-xs font-bold bg-red-400 rounded-full top-5 left-7">{orderItems[item.name].quantity}</span>
-        </NavLink>
-      );
-    }
-    return null;
-  };
-
-  return (
-    <li key={item.name} className="flex flex-row content-center justify-between p-2 text-center border-1 ">
-      <div className="w-1/3 h-full"><img src={item.image} alt={item.name} className="" /></div>
-      <div className="w-2/3">
+const Item = ({ item }) => (
+  <NavLink to={`/${item.id}`} className="flex justify-center">
+    <li key={item.name} className="flex flex-col items-center justify-between w-9/12 gap-4 p-2 py-6 text-center rounded-md bg-space-cadet text-verdigris">
+      <div className="w-2/3 h-full">
+        <img src={item.image} alt={item.name} className="" />
+      </div>
+      <div className="flex flex-col justify-between w-full gap-4">
         <p>{item.name}</p>
-        <p>{item.price}</p>
-        <div className="flex justify-around">
-          <button
-            type="button"
-            className="p-2 px-6 text-white bg-green-400 rounded-2xl"
-            onClick={() => addToCart(item)}
-          >
-            Add To cart
-          </button>
-          {orderItems[item.name] && orderItems[item.name].quantity > 0 && (
-            <button
-              type="button"
-              className="p-2 px-6 text-white bg-red-400 rounded-2xl"
-              onClick={() => removeFromCart(item)}
-            >
-              Remove
-            </button>
-          )}
-          {showCartItemQuantity(item)}
-        </div>
+        <p>
+          $
+          {item.price}
+        </p>
       </div>
     </li>
-  );
-};
+  </NavLink>
+);
 
 Item.propTypes = {
   item: PropTypes.shape({
