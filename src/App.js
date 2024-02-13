@@ -21,7 +21,7 @@ function App() {
   }, []);
 
   return (
-    <main className="font-proxima-nova">
+    <main className="min-h-screen font-proxima-nova bg-ym-blue">
       <BrowserRouter>
         <Navigation />
         <Routes>
