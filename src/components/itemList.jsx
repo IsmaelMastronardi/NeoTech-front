@@ -46,7 +46,7 @@ const ItemList = () => {
     itemsArrCopy.sort(orderComparator);
   }
   return (
-    <>
+    <div>
       <div className="relative w-full p-4">
         <div className="flex flex-col p-2 pl-4 border-2 text-verdigris border-oxford-blue">
           <button
@@ -77,14 +77,14 @@ const ItemList = () => {
           </div>
         </div>
       </div>
-      <section className="w-full p-4 ">
-        <ul className="flex flex-col items-center justify-center w-full gap-2">
+      <div className="w-full p-4 md:px-10">
+        <ul className="flex flex-col items-center justify-center w-full gap-2 md:grid md:grid-cols-2 md:gap-8">
           {itemsArrCopy.map((item) => (
             <Item item={item} key={item + item.id} />
           ))}
         </ul>
-      </section>
-    </>
+      </div>
+    </div>
   );
 };
 
