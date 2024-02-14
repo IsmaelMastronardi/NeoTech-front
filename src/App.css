@@ -9,9 +9,25 @@ body {
 }
 
 .addButton {
-  @apply p-1 px-4 font-bold text-black transition-colors duration-75 rounded-md shadow-sm bg-fluorescent-cyan shadow-current active:bg-ligther-verdigris hover:bg-verdigris;
+  @apply p-1 px-4 font-bold text-black transition-colors duration-75 rounded-md shadow-sm bg-fluorescent-cyan shadow-current active:bg-ligther-verdigris hover:bg-verdigris md:px-8 md:text-lg;
 }
 
 .removeButton {
-  @apply p-1 px-4 font-bold text-black transition-colors duration-75 rounded-md shadow-sm bg-custom-red shadow-current hover:bg-dark-red active:bg-light-red;
+  @apply p-1 px-4 font-bold text-black transition-colors duration-75 rounded-md shadow-sm bg-custom-red shadow-current hover:bg-dark-red active:bg-light-red md:px-8 md:text-lg;
+}
+
+.shortHR {
+  @apply w-48 h-1 mx-auto bg-gray-700 border-0 rounded dark:bg-gray-700 md:w-80;
+}
+
+.listItem {
+  @apply flex flex-col items-center justify-between w-9/12 gap-4 p-2 py-6 text-center rounded-md bg-space-cadet text-verdigris md:w-full;
+}
+
+.listItemCart {
+  @apply flex flex-col items-center justify-between w-9/12 gap-2 p-2 text-center rounded-md bg-space-cadet text-verdigris md:w-full;
+}
+
+.itemContainer {
+  @apply flex justify-center md:max-w-xs;
 }
