@@ -77,8 +77,8 @@ const ItemList = () => {
           </div>
         </div>
       </div>
-      <div className="w-full p-4 md:px-10">
-        <ul className="flex flex-col items-center justify-center w-full gap-2 md:flex-row md:flex-wrap md:gap-10">
+      <div className="flex justify-center w-full p-4 md:px-10">
+        <ul className="flex flex-col items-center justify-center w-full gap-2 md:flex-row md:flex-wrap md:gap-10 2xl:w-10/12">
           {itemsArrCopy.map((item) => (
             <Item item={item} key={item + item.id} />
           ))}
