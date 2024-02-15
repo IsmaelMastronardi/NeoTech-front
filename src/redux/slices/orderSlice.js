@@ -102,7 +102,6 @@ const orderSlice = createSlice({
         state.orderItems = {};
         state.itemsCount = 0;
         state.pastOrdersArray = [action.payload[2]];
-        console.log(action.payload);
         saveStateToLocalStorage(state);
       })
       .addCase(fetchPastOrders.pending, (state) => {
@@ -116,7 +115,6 @@ const orderSlice = createSlice({
       .addCase(fetchPastOrders.fulfilled, (state, action) => {
         state.pastOrdersLoading = false;
         state.pastOrdersArray = action.payload;
-        console.log(action.payload);
       });
   },
 });

@@ -11,7 +11,8 @@ const Profile = () => {
   }
 
   return (
-    <section className="flex flex-col items-center justify-center">
+    <section className="flex flex-col items-center justify-center pt-20 text-fluorescent-cyan">
+      <h1>YOUR ORDERS:</h1>
       <PastOrders />
     </section>
   );

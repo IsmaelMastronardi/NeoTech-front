@@ -2,9 +2,9 @@ import ItemList from '../components/itemList';
 import CategoriesMenu from '../components/categoriesMenu';
 
 const Home = () => (
-  <>
-    <div className="bg-orange-200">
-      <div className="flex flex-row gap-10 mb-10">
+  <section>
+    <div className="mt-14 bg-ym-blue">
+      <div className="flex flex-row">
         <CategoriesMenu />
       </div>
       <div>
@@ -12,7 +12,7 @@ const Home = () => (
       </div>
     </div>
 
-  </>
+  </section>
 );
 
 export default Home;

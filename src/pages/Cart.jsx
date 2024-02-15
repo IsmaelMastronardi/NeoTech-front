@@ -1,6 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import React from 'react';
 import { addNewItemAndSave, completeOrder } from '../redux/slices/orderSlice';
+import trashIcon from '../images/trash_icon.png';
+import minusIcon from '../images/minus_icon.png';
+import plusIcon from '../images/plus_icon.png';
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -51,62 +55,74 @@ const Cart = () => {
     );
   }
   return (
-    <section className="flex flex-col items-center justify-center">
-      <ul className="flex flex-col w-10/12 gap-16 py-10">
+    <section className="flex flex-col items-center justify-center pt-20 text-fluorescent-cyan">
+      <ul className="flex flex-col items-center justify-center w-full gap-2 md:flex-row md:flex-wrap md:gap-10 2xl:w-10/12">
         {Object.values(orderItems).map((orderItem) => {
           const { item } = orderItem;
           const { quantity } = orderItem;
           return (
-            <li key={item.id} className="border rounded-2xl">
-              <div className="py-2 text-center">
-                <p className="text-2xl">{item.name}</p>
-              </div>
-              <div className="flex flex-row gap-2">
-                <div className="w-1/2">
-                  <img src={item.image} alt={`${item.name}`} />
-                </div>
-                <div className="flex flex-col justify-between text-center">
-                  <div className="">
-                    <p>{item.description}</p>
+            <React.Fragment key={item.id}>
+              <li className="itemContainer">
+                <div className="w-full listItemCart">
+                  <NavLink to={`/${item.id}`} className="flex flex-col justify-center items-center w-full">
+                    <div className="flex justify-between w-full px-1 my-2 text-center border-b border-verdigris">
+                      <p className="py-2 text-2xl text-center truncate">{item.name}</p>
+                      <button
+                        type="button"
+                        className=""
+                        onClick={() => deleteFromCart(item, quantity)}
+                      >
+                        <img
+                          src={trashIcon}
+                          alt="trash icon"
+                          className="h-10 pointer-events-none"
+                        />
+                      </button>
+                    </div>
+                    <div className="flex flex-col items-center gap-2 w-full">
+                      <div className="w-9/12">
+                        <img src={item.image} alt={`${item.name}`} className=" rounded-md" />
+                      </div>
+                      <div className="flex justify-center w-full min-w-0">
+                        <p className="py-2 text-2xl truncate">{item.description}</p>
+                      </div>
+                      <div>
+                        <p className="text-3xl">
+                          $
+                          {item.price}
+                        </p>
+                      </div>
+                    </div>
+                  </NavLink>
+                  <div className="flex flex-row justify-around py-4">
+                    <div className="flex flex-row items-center justify-center gap-2 border rounded-sm">
+                      <button
+                        type="button"
+                        className={`text-4xl ${quantity === 1 ? 'text-gray-100' : ''}`}
+                        onClick={() => removeFromCart(item, quantity)}
+                      >
+                        <img src={minusIcon} alt="minus icon" className="h-12" />
+                      </button>
+                      <p className="text-4xl text-center">{quantity}</p>
+                      <button
+                        type="button"
+                        className=""
+                        onClick={() => addToCart(item)}
+                      >
+                        <img src={plusIcon} alt="plus icon" className="h-12" />
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex justify-around">
-                    <button
-                      type="button"
-                      className="px-3 py-1 bg-red-400 rounded-full"
-                      onClick={() => deleteFromCart(item)}
-                    >
-                      Delete
-                    </button>
-                  </div>
                 </div>
-              </div>
-              <div className="flex flex-row justify-around py-4">
-                <div className="flex flex-row justify-center">
-                  <button
-                    type="button"
-                    className={`text-4xl ${quantity === 1 ? 'text-gray-100' : ''}`}
-                    onClick={() => removeFromCart(item, quantity)}
-                  >
-                    -
-                  </button>
-                  <p className="">{quantity}</p>
-                  <button
-                    type="button"
-                    className=""
-                    onClick={() => addToCart(item)}
-                  >
-                    +
-                  </button>
-                </div>
-                <p>{item.price}</p>
-              </div>
-            </li>
+
+              </li>
+            </React.Fragment>
           );
         })}
       </ul>
       <button
         type="button"
-        className="px-3 py-1 bg-green-400 rounded-full"
+        className="addButton mt-20"
         onClick={() => handleCompleteOrder(orderItems)}
       >
         Complete Order
