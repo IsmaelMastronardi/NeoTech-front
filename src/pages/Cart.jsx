@@ -44,7 +44,7 @@ const Cart = () => {
 
   if (itemsCount === 0) {
     return (
-      <section className="flex flex-col gap-8 pt-8 text-center bg-ym-blue">
+      <section className="flex flex-col gap-8 pt-8 text-center">
         <p>Your cart Is empty</p>
         <div>
           <NavLink to="/">
@@ -55,7 +55,7 @@ const Cart = () => {
     );
   }
   return (
-    <section className="flex flex-col items-center justify-center pt-20 bg-ym-blue text-fluorescent-cyan">
+    <section className="flex flex-col items-center justify-center pt-20 text-fluorescent-cyan">
       <ul className="flex flex-col items-center justify-center w-full gap-2 md:flex-row md:flex-wrap md:gap-10 2xl:w-10/12">
         {Object.values(orderItems).map((orderItem) => {
           const { item } = orderItem;
