@@ -6,8 +6,9 @@ import Home from './pages/Home';
 import Cart from './pages/Cart';
 import Profile from './pages/Profile';
 import { createGuestUser, fetchUser } from './redux/slices/userSlice';
-import Navigation from './pages/navigation';
+import Navigation from './components/navigation';
 import ItemDetails from './pages/ItemDetails';
+import Footer from './pages/Footer';
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function App() {
           <Route path="/:id" element={<ItemDetails />} />
         </Routes>
       </BrowserRouter>
+      <Footer />
     </main>
   );
 }
