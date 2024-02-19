@@ -1,4 +1,10 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable react/jsx-props-no-spreading */
+import React from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
 import acer from '../images/brands/Acer.png';
 import amd from '../images/brands/AMD.png';
 import asus from '../images/brands/ASUS.png';
@@ -10,17 +16,28 @@ import nvidia from '../images/brands/Nvidia.png';
 
 const BrandCarousel = () => {
   const brands = [acer, amd, asus, hp, intel, lenovo, logitech, nvidia];
+
+  const settings = {
+    infinite: true,
+    autoplay: true,
+    speed: 2000,
+    slidesToShow: brands.length,
+    slidesToScroll: 1,
+    centerMode: false,
+  };
+
   return (
-    <div className="flex items-center justify-between w-full bg-white h-28">
-      {brands.map((brand) => (
-        <img
-          key={brand}
-          src={brand}
-          alt="brand"
-          className="w-16 h-16 mx-2"
-        />
+    <Slider {...settings} className="flex items-center justify-center bg-space-cadet">
+      {brands.map((brand, index) => (
+        <div key={brand}>
+          <img
+            src={brand}
+            alt={`brand-${index}`}
+            className="w-16 h-16 mx-2"
+          />
+        </div>
       ))}
-    </div>
+    </Slider>
   );
 };
 

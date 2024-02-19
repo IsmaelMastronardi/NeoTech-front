@@ -8,6 +8,7 @@ import Profile from './pages/Profile';
 import { createGuestUser, fetchUser } from './redux/slices/userSlice';
 import Navigation from './components/navigation';
 import ItemDetails from './pages/ItemDetails';
+import Footer from './pages/Footer';
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/:id" element={<ItemDetails />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </main>
   );
