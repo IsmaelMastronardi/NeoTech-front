@@ -9,6 +9,9 @@ module.exports = {
         'proxima-nova': ['Proxima Nova', 'Arial', 'sans-serif'],
       },
       colors: {
+        'custom-orange': '#FF9900',
+        'black-1': '#151515',
+        'light-black': '#1c1c1c',
         'oxford-blue': '#0b132b',
         'space-cadet': '#1c2541',
         'ym-blue': '#3a506b',
