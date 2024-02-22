@@ -21,7 +21,7 @@ module.exports = {
         'ligther-verdigris': '#79fcf9',
         'light-gray': '#CDCDCD',
         'light-red': '#e03645',
-        'custom-red': '#D02E3C',
+        'custom-red': '#C72525',
         'dark-red': '#a12530',
         'semi-transparent-light-gray': 'rgba(211, 220, 230, 0.4)',
         'transparent-white': 'rgba(255, 255, 255, 0.5)',
