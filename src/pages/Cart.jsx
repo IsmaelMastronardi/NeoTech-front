@@ -1,14 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import React from 'react';
-import { addNewItemAndSave, completeOrder } from '../redux/slices/orderSlice';
+import {
+  addItemToOrder, completeOrder, deleteItemFromOrder, fetchOrder,
+} from '../redux/slices/orderSlice';
 import trashIcon from '../images/trash_icon.png';
 import minusIcon from '../images/minus_icon.png';
 import plusIcon from '../images/plus_icon.png';
 
 const Cart = () => {
   const dispatch = useDispatch();
-
+  const totalPrice = useSelector((store) => store.order.totalPrice);
   const {
     loading,
   } = useSelector((store) => store.user);
@@ -19,29 +21,19 @@ const Cart = () => {
   } = useSelector((store) => store.order);
 
   const addToCart = (item) => {
-    dispatch(addNewItemAndSave(item, 'addItem'));
+    dispatch(addItemToOrder(item)).then(() => {
+      dispatch(fetchOrder());
+    });
   };
 
-  const removeFromCart = (item, quantity) => {
-    if (quantity > 1) {
-      dispatch(addNewItemAndSave(item, 'removeItem'));
-    }
-  };
-
-  const deleteFromCart = (item) => {
-    dispatch(addNewItemAndSave(item, 'deleteItem'));
+  const removeFromCart = (item) => {
+    dispatch(deleteItemFromOrder(item)).then(() => {
+      dispatch(fetchOrder());
+    });
   };
 
   const handleCompleteOrder = (order) => {
     dispatch(completeOrder(order));
-  };
-
-  const calculateTotalPrice = () => {
-    let total = 0;
-    Object.values(orderItems).forEach((orderItem) => {
-      total += orderItem.item.price * orderItem.quantity;
-    });
-    return parseFloat(total.toFixed(2));
   };
 
   if (loading) {
@@ -72,24 +64,25 @@ const Cart = () => {
           Total price:
           {' '}
           $
-          {calculateTotalPrice()}
+          {totalPrice}
         </p>
       </div>
       <ul className="flex flex-col items-center justify-center w-full gap-2 md:flex-row md:flex-wrap md:gap-10 2xl:w-10/12">
         {Object.values(orderItems).map((orderItem) => {
-          const { item } = orderItem;
+          const { product } = orderItem;
           const { quantity } = orderItem;
+          console.log(orderItem);
           return (
-            <React.Fragment key={item.id}>
+            <React.Fragment key={product.id}>
               <li className="itemContainer listItem">
                 <div className="w-full">
-                  <NavLink to={`/${item.id}`} className="flex flex-col items-center justify-center w-full">
+                  <NavLink to={`/${product.id}`} className="flex flex-col items-center justify-center w-full">
                     <div className="flex justify-between w-full px-1 my-2 text-center border-b border-verdigris">
-                      <p className="py-2 text-2xl text-center truncate">{item.name}</p>
+                      <p className="py-2 text-2xl text-center truncate">{product.name}</p>
                       <button
                         type="button"
                         className=""
-                        onClick={() => deleteFromCart(item, quantity)}
+                        onClick={() => removeFromCart(product)}
                       >
                         <img
                           src={trashIcon}
@@ -100,15 +93,15 @@ const Cart = () => {
                     </div>
                     <div className="flex flex-col items-center w-full gap-2">
                       <div className="w-9/12">
-                        <img src={item.image} alt={`${item.name}`} className="rounded-md " />
+                        <img src={product.image} alt={`${product.name}`} className="rounded-md " />
                       </div>
                       <div className="flex justify-center w-full min-w-0">
-                        <p className="py-2 text-2xl truncate">{item.description}</p>
+                        <p className="py-2 text-2xl truncate">{product.description}</p>
                       </div>
                       <div>
                         <p className="text-3xl">
                           $
-                          {item.price}
+                          {product.price}
                         </p>
                       </div>
                     </div>
@@ -118,7 +111,7 @@ const Cart = () => {
                       <button
                         type="button"
                         className={`text-4xl ${quantity === 1 ? 'text-gray-100' : ''}`}
-                        onClick={() => removeFromCart(item, quantity)}
+                        onClick={() => removeFromCart(product, quantity)}
                       >
                         <img src={minusIcon} alt="minus icon" className="h-12" />
                       </button>
@@ -126,7 +119,7 @@ const Cart = () => {
                       <button
                         type="button"
                         className=""
-                        onClick={() => addToCart(item)}
+                        onClick={() => addToCart(product)}
                       >
                         <img src={plusIcon} alt="plus icon" className="h-12" />
                       </button>

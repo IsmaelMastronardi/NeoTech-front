@@ -8,17 +8,23 @@ import Profile from './pages/Profile';
 import { createGuestUser, fetchUser } from './redux/slices/userSlice';
 import Navigation from './components/navigation';
 import ItemDetails from './pages/ItemDetails';
+import { fetchOrder } from './redux/slices/orderSlice';
 // import Footer from './pages/Footer';
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (localStorage.getItem('userState') === null) {
-      dispatch(createGuestUser());
-    } else {
-      dispatch(fetchUser(JSON.parse(localStorage.getItem('userState'))));
-    }
+    const loadUser = async () => {
+      if (localStorage.getItem('userState') === null) {
+        await dispatch(createGuestUser());
+      } else {
+        await dispatch(fetchUser(JSON.parse(localStorage.getItem('userState'))));
+      }
+      dispatch(fetchOrder());
+    };
+
+    loadUser();
   }, []);
 
   return (
