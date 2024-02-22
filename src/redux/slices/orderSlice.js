@@ -6,7 +6,7 @@ const url = 'http://localhost:3000/api/v1/';
 export const completeOrder = createAsyncThunk('order/complete', async (order, { getState }) => {
   const { user } = getState();
   try {
-    const response = await axios.post(`${url}/users/${user.user.id}/orders/fill_and_complete_order`, { order });
+    const response = await axios.post(`${url}/users/${user.user.id}/orders/complete_order`, { order });
     return response.data;
   } catch (error) {
     throw new Error(error);
@@ -26,37 +26,46 @@ export const fetchPastOrders = createAsyncThunk('user/fetchPastOrders', async (_
   return null;
 });
 
-const saveStateToLocalStorage = (state) => {
+export const addItemToOrder = createAsyncThunk('order/addItemToOrder', async (item, { getState }) => {
+  const { user } = getState();
   try {
-    const serializedState = JSON.stringify({
-      itemsCount: state.itemsCount,
-      orderItems: state.orderItems,
-    });
-    localStorage.setItem('orderState', serializedState);
+    const response = await axios.post(`${url}users/${user.user.id}/orders/add_item`, { order_item: { item_id: item.id } });
+    return response.data;
   } catch (error) {
-    console.error('Error saving state to local storage:', error);
+    throw new Error(error);
   }
-};
+});
 
-const loadStateFromLocalStorage = () => {
+export const deleteItemFromOrder = createAsyncThunk('order/deleteItemFromOrder', async (item, { getState }) => {
+  const { user } = getState();
   try {
-    const serializedState = localStorage.getItem('orderState');
-    if (serializedState === null) {
-      return undefined;
-    }
-    return JSON.parse(serializedState);
+    const response = await axios.post(`${url}users/${user.user.id}/orders/remove_item`, { order_item: { item_id: item.id } });
+    return response.data;
   } catch (error) {
-    console.error('Error loading order state from local storage:', error);
-    return undefined;
+    throw new Error(error);
   }
-};
+});
+
+export const fetchOrder = createAsyncThunk('order/fetchOrder', async (_, { getState }) => {
+  const { user } = getState();
+  if (!user.loadig) {
+    try {
+      const response = await axios.get(`${url}users/${user.user.id}/orders/show_current_order`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+  throw new Error('User not loaded');
+});
 
 const initialState = {
-  loading: true,
-  orderItems: loadStateFromLocalStorage()?.orderItems || {},
-  itemsCount: loadStateFromLocalStorage()?.itemsCount || 0,
+  orderLoading: true,
+  orderItems: {},
+  itemsCount: 0,
   pastOrdersLoading: true,
   pastOrdersArray: [],
+  totalPrice: 0,
 };
 
 const orderSlice = createSlice({
@@ -66,10 +75,10 @@ const orderSlice = createSlice({
     addItem: {
       reducer: (state, action) => {
         const item = action.payload;
-        if (!state.orderItems[item.name]) {
-          state.orderItems[item.name] = { item, quantity: 1 };
+        if (!state.orderItems[item.id]) {
+          state.orderItems[item.id] = { quantity: 1 };
         } else {
-          state.orderItems[item.name].quantity += 1;
+          state.orderItems[item.id].quantity += 1;
         }
         state.itemsCount += 1;
       },
@@ -102,7 +111,6 @@ const orderSlice = createSlice({
         state.orderItems = {};
         state.itemsCount = 0;
         state.pastOrdersArray = [action.payload[2]];
-        saveStateToLocalStorage(state);
         state.pastOrdersLoading = true;
       })
       .addCase(fetchPastOrders.pending, (state) => {
@@ -116,22 +124,64 @@ const orderSlice = createSlice({
       .addCase(fetchPastOrders.fulfilled, (state, action) => {
         state.pastOrdersLoading = false;
         state.pastOrdersArray = action.payload;
+      })
+      .addCase(addItemToOrder.pending, (state) => {
+        state.orderLoading = true;
+      })
+      .addCase(addItemToOrder.rejected, (state, error) => {
+        state.orderLoading = false;
+        console.log(error);
+        console.log('Error adding to cart');
+      })
+      .addCase(addItemToOrder.fulfilled, (state) => {
+        state.orderLoading = false;
+        console.log('Item added to order');
+      })
+      .addCase(deleteItemFromOrder.pending, (state) => {
+        state.orderLoading = true;
+      })
+      .addCase(deleteItemFromOrder.rejected, (state, error) => {
+        state.orderLoading = false;
+        console.log(error);
+        console.log('Error deleting from cart');
+      })
+      .addCase(deleteItemFromOrder.fulfilled, (state) => {
+        state.orderLoading = false;
+        console.log('Item deleted from cart');
+      })
+      .addCase(fetchOrder.pending, (state) => {
+        state.orderLoading = true;
+      })
+      .addCase(fetchOrder.rejected, (state, error) => {
+        state.orderLoading = false;
+        console.log(error);
+        console.log('Error fetching order');
+      })
+      .addCase(fetchOrder.fulfilled, (state, action) => {
+        state.orderLoading = false;
+        state.itemsCount = 0;
+        action.payload.order_items.forEach((orderItem) => {
+          state.orderItems[orderItem.item_id] = {
+            quantity: orderItem.quantity, product: orderItem.item,
+          };
+          state.itemsCount += orderItem.quantity;
+        });
+        state.totalPrice = action.payload.total_price;
       });
   },
 });
 
-export const addNewItemAndSave = (item, action = 'default') => (dispatch, getState) => {
+export const addNewItemAndSave = (item, action = 'default') => (dispatch) => {
+  console.log('addNewItemAndSave');
   if (action === 'addItem') {
-    dispatch(orderSlice.actions.addItem(item));
+    console.log('addNewItemAndSave addItem');
+    // dispatch(orderSlice.actions.addItem(item));
+    fetchOrder();
   } else if (action === 'removeItem') {
     dispatch(orderSlice.actions.removeItem(item));
   } else if (action === 'deleteItem') {
     dispatch(orderSlice.actions.deleteItem(item));
   }
-
-  const updatedState = getState().order;
-
-  saveStateToLocalStorage(updatedState);
 };
 
 export const { addNewItem } = orderSlice.actions;
