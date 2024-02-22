@@ -8,7 +8,7 @@ import Profile from './pages/Profile';
 import { createGuestUser, fetchUser } from './redux/slices/userSlice';
 import Navigation from './components/navigation';
 import ItemDetails from './pages/ItemDetails';
-import Footer from './pages/Footer';
+// import Footer from './pages/Footer';
 
 function App() {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ function App() {
   }, []);
 
   return (
-    <main className="min-h-screen font-proxima-nova bg-ym-blue">
+    <main className="min-h-screen font-proxima-nova ">
       <BrowserRouter>
         <Navigation />
         <Routes>
@@ -31,7 +31,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/:id" element={<ItemDetails />} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>
     </main>
   );

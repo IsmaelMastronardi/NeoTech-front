@@ -11,7 +11,7 @@ const Navigation = () => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-50 shadow-sm h-14 bg-space-cadet text-verdigris shadow-current">
+      <div className="fixed top-0 left-0 right-0 z-50 shadow-sm h-14 bg-light-black text-white shadow-current">
         <nav className="h-full p-2">
           <ul className="flex flex-row justify-between h-full pr-4">
             <li className=""><NavLink to="/"><img src={appLogo} alt="logo" className="h-full" /></NavLink></li>

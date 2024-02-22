@@ -9,11 +9,19 @@ body {
 }
 
 .addButton {
-  @apply p-1 px-4 font-bold text-black transition-colors duration-75 rounded-md shadow-sm bg-fluorescent-cyan shadow-current active:bg-ligther-verdigris hover:bg-verdigris md:px-8 md:text-lg;
+  @apply flex items-center gap-2 p-1 px-10 text-sm text-white transition-colors duration-75 rounded-sm shadow-sm bg-custom-orange shadow-custom-orange active:bg-custom-orange hover:bg-custom-orange md:px-8 md:text-lg;
+}
+
+.addButtonSmall {
+  @apply flex items-center gap-2 p-1 px-4 text-sm text-white transition-colors duration-75 rounded-sm shadow-sm bg-custom-orange shadow-custom-orange active:bg-custom-orange hover:bg-custom-orange md:px-8 md:text-lg;
 }
 
 .removeButton {
-  @apply p-1 px-4 font-bold text-black transition-colors duration-75 rounded-md shadow-sm bg-custom-red shadow-current hover:bg-dark-red active:bg-light-red md:px-8 md:text-lg;
+  @apply p-1 px-6 text-sm text-white transition-colors duration-75 rounded-sm shadow-sm bg-custom-red shadow-custom-red hover:bg-dark-red active:bg-light-red md:px-8 md:text-lg;
+}
+
+.filterButton {
+  @apply flex p-1 px-12 py-3 text-white transition-colors duration-75 rounded-sm shadow-sm bg-custom-orange shadow-custom-orange active:bg-custom-orange hover:bg-custom-orange md:px-8 md:text-lg;
 }
 
 .shortHR {
@@ -21,13 +29,17 @@ body {
 }
 
 .listItem {
-  @apply flex flex-col items-center justify-between w-9/12 gap-4 p-2 py-6 text-center rounded-md bg-space-cadet text-verdigris md:w-full;
+  @apply flex flex-col items-center justify-between w-9/12 gap-4 p-2 py-6 text-center text-white rounded-md bg-light-black md:w-full;
 }
 
 .listItemCart {
-  @apply flex flex-col items-center justify-between w-9/12 gap-2 p-2 text-center rounded-md bg-space-cadet text-verdigris md:w-full;
+  @apply flex flex-col items-center justify-between w-9/12 gap-2 p-2 text-center rounded-md bg-light-black md:w-full;
 }
 
 .itemContainer {
   @apply flex justify-center md:max-w-xs;
+}
+
+.itemBorder {
+  @apply transition-all duration-300 border-2 border-solid rounded-lg border-light-black hover:border-2 hover:border-solid hover:border-custom-orange;
 }

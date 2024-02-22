@@ -9,6 +9,9 @@ module.exports = {
         'proxima-nova': ['Proxima Nova', 'Arial', 'sans-serif'],
       },
       colors: {
+        'custom-orange': '#FF9900',
+        'black-1': '#151515',
+        'light-black': '#1c1c1c',
         'oxford-blue': '#0b132b',
         'space-cadet': '#1c2541',
         'ym-blue': '#3a506b',
@@ -18,7 +21,7 @@ module.exports = {
         'ligther-verdigris': '#79fcf9',
         'light-gray': '#CDCDCD',
         'light-red': '#e03645',
-        'custom-red': '#D02E3C',
+        'custom-red': '#C72525',
         'dark-red': '#a12530',
         'semi-transparent-light-gray': 'rgba(211, 220, 230, 0.4)',
         'transparent-white': 'rgba(255, 255, 255, 0.5)',
