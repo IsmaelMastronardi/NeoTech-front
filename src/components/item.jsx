@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import cartIcon from '../images/cart_icon.svg';
 import { addNewItemAndSave } from '../redux/slices/orderSlice';
 
@@ -9,9 +9,20 @@ const Item = ({ item, toggleMenu, showItemDetails }) => {
   const addToCart = (item) => {
     dispatch(addNewItemAndSave(item, 'addItem'));
   };
+  const {
+    orderItems,
+  } = useSelector((store) => store.order);
+  const showCartItemQuantity = (item) => {
+    if (orderItems[item.name] && orderItems[item.name].quantity > 0) {
+      return (
+        <span className="absolute top-0 px-1 text-xs font-bold rounded-full right-7 bg-custom-red">{orderItems[item.name].quantity}</span>
+      );
+    }
+    return null;
+  };
 
   return (
-    <div className="itemContainer">
+    <div className="itemContainer itemBorder">
       <li key={item.name} className="listItem">
         <button
           className="w-2/3 h-full"
@@ -23,7 +34,7 @@ const Item = ({ item, toggleMenu, showItemDetails }) => {
         >
           <img src={item.image} alt={item.name} className="rounded-md" />
         </button>
-        <div className="flex flex-col w-full items-start">
+        <div className="flex flex-col items-start w-full">
           <p className="text-md">{item.name}</p>
           <p className="text-sm">
             Price: $
@@ -32,11 +43,12 @@ const Item = ({ item, toggleMenu, showItemDetails }) => {
         </div>
         <button
           type="button"
-          className="addButton"
+          className="relative addButton"
           onClick={() => addToCart(item)}
         >
           Add To Cart
           <img src={cartIcon} alt="cart" className="w-6 h-6" />
+          {showCartItemQuantity(item)}
         </button>
       </li>
     </div>

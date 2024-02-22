@@ -9,14 +9,13 @@ const PartOrder = ({ order }) => {
   };
 
   const [menuOpen, setMenuOpen] = useState(false);
-
   const alternateMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
   return (
-    <li key={order.id} className="flex flex-col w-full gap-4 pl-4 border rounded-md bg-space-cadet lg:w-9/12 2xl:w-7/12">
-      <h3 className="text-2xl">
+    <li key={order.id} className="flex flex-col w-full gap-4 px-4 text-white rounded-md bg-light-black lg:w-9/12 2xl:w-7/12 itemBorder">
+      <h3 className="text-2xl text-custom-orange">
         Order Number:
         {' '}
         {order.id}
@@ -24,52 +23,46 @@ const PartOrder = ({ order }) => {
       <p className="text-lg">
         Date:
         {' '}
-        <span className="text-light-blue">
-          {formatDate(order.created_at)}
-        </span>
+        {formatDate(order.created_at)}
       </p>
       <p className="text-lg">
         Total Price:
         {' '}
-        <span className="text-light-blue">
-          $
-          {order.total_price}
-        </span>
+        $
+        {order.total_price.toFixed(2)}
       </p>
       <div className="flex justify-center pb-2">
         <button type="button" className="addButton" onClick={() => alternateMenu()}>
           {menuOpen === true ? 'See Less' : 'See More'}
         </button>
       </div>
-      <div className={menuOpen === true ? 'flex flex-col items-center gap-4 pb-10' : 'hidden'}>
+      <ul className={menuOpen === true ? 'flex flex-col items-center justify-center w-full gap-2 md:flex-row md:flex-wrap md:gap-10' : 'hidden'}>
         {order.order_items.map((orderItem) => (
-          <NavLink to={`/${orderItem.item.id}`} key={orderItem.item.id} className="flex flex-col items-center w-1/2 gap-2 rounded-md bg-ym-blue">
-            <p className="text-xl">
-              {orderItem.item.name}
-            </p>
-            <div className="flex justify-start gap-10 pb-4">
-              <img src={orderItem.item.image} alt={orderItem.item.name} className="w-1/2 rounded-r-md" />
-              <div className="flex flex-col gap-4 pt-4 text-lg">
-                <p>
-                  Quantity:
-                  {' '}
-                  <span className="text-oxford-blue">
+          <NavLink to={`/${orderItem.item.id}`} key={orderItem.item.id} className="itemContainer">
+            <div className="flex flex-col items-center justify-center w-full bg-black-1">
+              <p className="text-xl text-custom-orange">
+                {orderItem.item.name}
+              </p>
+              <div className="">
+                <img src={orderItem.item.image} alt={orderItem.item.name} className="rounded-r-md" />
+                <div className="flex flex-col gap-4 pt-4 text-lg">
+                  <p>
+                    Quantity:
+                    {' '}
                     {orderItem.item.quantity}
-                  </span>
-                </p>
-                <p>
-                  Price:
-                  {' '}
-                  <span className="text-oxford-blue">
+                  </p>
+                  <p>
+                    Price:
+                    {' '}
                     $
                     {orderItem.item.price}
-                  </span>
-                </p>
+                  </p>
+                </div>
               </div>
             </div>
           </NavLink>
         ))}
-      </div>
+      </ul>
     </li>
   );
 };

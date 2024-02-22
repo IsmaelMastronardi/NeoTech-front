@@ -21,8 +21,8 @@ const Home = () => {
   };
 
   return (
-    <section>
-      <div className="mt-14 bg-black-1">
+    <section className="relative">
+      <div className="mt-14">
         <div className="flex flex-row">
           <FilterMenu chooseOrder={chooseOrder} />
         </div>
@@ -30,7 +30,6 @@ const Home = () => {
           <ItemList orderComparator={orderComparator} order={order} />
         </div>
       </div>
-
     </section>
   );
 };

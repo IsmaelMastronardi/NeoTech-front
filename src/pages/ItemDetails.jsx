@@ -32,31 +32,34 @@ const ItemDetails = ({ item, closeMenu }) => {
   };
 
   return (
-    <div className="fixed bg-white left-0 right-0 top-0 bottom-0 bg-opacity-40 overflow-scroll">
+    <div className="fixed top-0 bottom-0 left-0 right-0 overflow-scroll bg-white bg-opacity-40">
       <div className="flex justify-center text-white">
-        <div className="flex flex-col items-center w-9/12 mt-20 mb-10 rounded-md lg:flex-row lg:items-start lg:mt-40 bg-light-black">
-          <div className="flex flex-col justify-center w-full h-full relative">
-            <button className="absolute right-2 top-2" type="button" onClick={closeMenu}>
+        <div className="relative flex flex-col items-center w-9/12 mt-20 mb-10 rounded-md lg:flex-row lg:items-start lg:mt-40 bg-light-black">
+          <button className="z-40 right-2 top-2 hiddden md:absolute" type="button" onClick={closeMenu}>
+            <img src={xIcon} alt="close" className="hidden w-8 h-8 md:block" />
+          </button>
+          <div className="relative flex flex-col justify-center w-full h-full">
+            <button className="absolute right-2 top-2 md:hidden" type="button" onClick={closeMenu}>
               <img src={xIcon} alt="close" className="w-8 h-8" />
             </button>
             <img src={item.image} alt={item.name} className="w-full rounded-t-md lg:rounded-md" />
-            <hr className="w-11/12 h-1 mx-auto mt-2 mb-2 bg-gray-400 border-0 rounded dark:bg-gray-700" />
+            <hr className="w-11/12 h-1 mx-auto mt-2 mb-2 bg-gray-400 border-0 rounded dark:bg-gray-700 lg:hidden" />
           </div>
-          <div className="flex flex-col w-full gap-2 text-center rounded-md items-center">
-            <hr className="hidden mt-2 shortHR lg:flex" />
-            <h1 className="text-xl">{item.name}</h1>
+          <div className="flex flex-col items-center w-full h-full gap-2 text-center lg:justify-center md:gap-4 xl:gap-8 2xl:gap-8">
+            <hr className="hidden mt-2 shortHR lg:hidden" />
+            <h1 className="text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">{item.name}</h1>
             <hr className="shortHR" />
-            <p className="text-sm w-3/4">{item.description}</p>
+            <p className="w-3/4 text-sm md:text-md 2xl:text-xl">{item.description}</p>
             <hr className="shortHR" />
-            <p className="text-md">
+            <p className="text-md 2xl:text-2xl">
               Price : $
               {item.price}
             </p>
-            <hr className="shortHR" />
-            <div className="flex justify-around mb-4">
+            <hr className="shortHR lg:hidden" />
+            <div className="flex justify-around w-full mb-4">
               <button
                 type="button"
-                className="addButton"
+                className="addButtonSmall"
                 onClick={() => addToCart(item)}
               >
                 Add To cart
