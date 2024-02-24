@@ -34,11 +34,11 @@ const Cart = () => {
 
   if (itemsCount === 0) {
     return (
-      <section className="flex flex-col gap-8 pt-8 text-center">
-        <p>Your cart Is empty</p>
+      <section className="flex flex-col gap-24 pt-40 mb-40 text-center text-white">
+        <p className="text-2xl">Your cart Is empty</p>
         <div>
           <NavLink to="/">
-            <button type="button" className="p-3 text-white bg-blue-400 rounded-2xl">Continue Shopping</button>
+            <button type="button" className="p-4 text-white transition-colors duration-75 rounded-sm bg-custom-orange shadow-custom-orange active:bg-custom-orange-dark hover:bg-custom-orange-light">Continue Shopping</button>
           </NavLink>
         </div>
       </section>
@@ -54,7 +54,7 @@ const Cart = () => {
           Total price:
           {' '}
           $
-          {totalPrice}
+          {totalPrice.toFixed(2)}
         </p>
       </div>
       <ul className="flex flex-col items-center justify-center w-full gap-2 md:flex-row md:flex-wrap md:gap-10 2xl:w-10/12">
