@@ -29,6 +29,8 @@ const ItemList = ({ orderComparator, sorter }) => {
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+
+    document.body.classList.toggle('menu-open');
   };
 
   if (itemsLoading) {
@@ -50,10 +52,11 @@ const ItemList = ({ orderComparator, sorter }) => {
   return (
     <div className="relative">
       <div className="flex justify-center w-full p-4 md:px-10">
-        <ul className="flex flex-col items-center justify-center w-full gap-2 md:flex-row md:flex-wrap md:gap-10 2xl:w-10/12">
+        <ul className="flex flex-col items-center justify-center w-full gap-10 md:flex-row md:flex-wrap 2xl:w-10/12">
           {itemsArrCopy.map((item) => (
             <div
               key={item + item.id}
+              className="flex justify-center"
             >
               <Item item={item} toggleMenu={toggleMenu} showItemDetails={showItemDetails} />
             </div>
