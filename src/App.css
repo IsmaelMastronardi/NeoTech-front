@@ -43,3 +43,7 @@ body {
 .itemBorder {
   @apply transition-all duration-300 border-2 border-solid rounded-lg border-light-black hover:border-2 hover:border-solid hover:border-custom-orange;
 }
+
+.socialMediaIcon {
+  @apply w-20 h-20 p-2 border-2 border-white rounded-full hover:bg-white active:bg-gray-300;
+}

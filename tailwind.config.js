@@ -30,6 +30,9 @@ module.exports = {
         'extra-transparent-tekheltet': 'rgba(91, 42, 134, 0.4)',
         'semi-transparent-tekheltet': 'rgba(91, 42, 134, 0.5)',
       },
+      border: {
+        3: '3px',
+      },
     },
   },
   plugins: [],

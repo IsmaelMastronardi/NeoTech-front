@@ -11,7 +11,7 @@ import Navigation from './components/navigation';
 import ItemDetails from './pages/ItemDetails';
 import { fetchOrder } from './redux/slices/orderSlice';
 import 'react-notifications/lib/notifications.css';
-// import Footer from './pages/Footer';
+import Footer from './pages/Footer';
 
 function App() {
   const dispatch = useDispatch();
@@ -29,19 +29,21 @@ function App() {
   }, []);
 
   return (
-    <main className="min-h-screen font-proxima-nova ">
-      <BrowserRouter>
-        <Navigation />
-        <NotificationContainer />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/:id" element={<ItemDetails />} />
-        </Routes>
-        {/* <Footer /> */}
-      </BrowserRouter>
-    </main>
+    <>
+      <main className="min-h-screen font-proxima-nova">
+        <BrowserRouter>
+          <Navigation />
+          <NotificationContainer />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/:id" element={<ItemDetails />} />
+          </Routes>
+        </BrowserRouter>
+        <Footer />
+      </main>
+    </>
   );
 }
 
