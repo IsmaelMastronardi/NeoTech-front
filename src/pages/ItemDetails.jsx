@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import {
   addAndRemoveItems, addItemToOrder, deleteItemFromOrder,
 } from '../redux/slices/orderSlice';
-import cartIcon from '../images/cart_icon.svg';
+import cartIcon from '../images/cart_icon.png';
 import xIcon from '../images/x_icon.png';
 
 const ItemDetails = ({ item, closeMenu }) => {

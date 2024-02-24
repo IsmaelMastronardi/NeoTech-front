@@ -29,8 +29,6 @@ const ItemList = ({ orderComparator, sorter }) => {
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
-
-    document.body.classList.toggle('menu-open');
   };
 
   if (itemsLoading) {

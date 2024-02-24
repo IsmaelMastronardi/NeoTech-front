@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import cartIcon from '../images/cart_icon.svg';
+import cartIcon from '../images/cart_icon.png';
 import { addAndRemoveItems, addItemToOrder } from '../redux/slices/orderSlice';
 
 const Item = ({ item, toggleMenu, showItemDetails }) => {
