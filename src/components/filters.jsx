@@ -1,6 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/prop-types */
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import { fetchCategoryitems, fetchTopTenItems } from '../redux/slices/itemsSlice';
 
 const FilterMenu = ({ chooseOrder }) => {
@@ -19,6 +21,7 @@ const FilterMenu = ({ chooseOrder }) => {
     { name: 'Cooling', id: 18 },
     { name: 'Accessories', id: 19 },
   ];
+
   const [categoriesMenuOpen, setCategoriesMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -41,16 +44,21 @@ const FilterMenu = ({ chooseOrder }) => {
   };
 
   return (
-    <div className="flex items-center justify-around w-full mt-10 mb-10 filter-menu">
+    <div className="flex items-center justify-around w-full mt-10 mb-10 md:justify-center md:gap-40">
       <div className="relative">
         <button
           type="button"
           className="filterButton"
           onClick={toggleMenu}
         >
-          Categories
+          <p className="">Categories</p>
         </button>
-        {categoriesMenuOpen && (
+        <CSSTransition
+          in={categoriesMenuOpen}
+          timeout={300}
+          classNames="menu"
+          unmountOnExit
+        >
           <div className="absolute left-0 right-0 z-10 bg-white top-14">
             <ul className="flex flex-col gap-2">
               {categories.map((category) => (
@@ -59,6 +67,7 @@ const FilterMenu = ({ chooseOrder }) => {
                     type="button"
                     onClick={() => {
                       changeCategory(category.name, category.id);
+                      toggleMenu();
                     }}
                     className="text-black"
                   >
@@ -68,18 +77,23 @@ const FilterMenu = ({ chooseOrder }) => {
               ))}
             </ul>
           </div>
-        )}
+        </CSSTransition>
       </div>
       <div className="relative">
         <button
           type="button"
           className="filterButton"
-          onClick={() => toggleOrderMenu()}
+          onClick={toggleOrderMenu}
         >
-          Order By
+          <p className="px-2">Order By</p>
         </button>
-        <div className="absolute left-0 right-0 z-10 bg-white top-14">
-          {orderMenuOpen && (
+        <CSSTransition
+          in={orderMenuOpen}
+          timeout={300}
+          classNames="menu"
+          unmountOnExit
+        >
+          <div className="absolute left-0 right-0 z-10 bg-white top-14">
             <ul className="z-10 flex flex-col gap-2">
               {orderByArr.map((order) => (
                 <li key={order} className="p-2 border-b border-black-1">
@@ -95,8 +109,8 @@ const FilterMenu = ({ chooseOrder }) => {
                 </li>
               ))}
             </ul>
-          )}
-        </div>
+          </div>
+        </CSSTransition>
       </div>
     </div>
   );
