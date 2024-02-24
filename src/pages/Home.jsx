@@ -4,17 +4,17 @@ import ItemList from '../components/itemList';
 import FilterMenu from '../components/filters';
 
 const Home = () => {
-  const [order, setOrder] = useState('all');
+  const [sorter, setSorter] = useState('all');
 
   const chooseOrder = (val) => {
-    setOrder(val);
+    setSorter(val);
   };
 
   const orderComparator = (a, b) => {
-    if (order === 'Lower Price') {
+    if (sorter === 'Lower Price') {
       return (a.price - b.price);
     }
-    if (order === 'Higher Price') {
+    if (sorter === 'Higher Price') {
       return (b.price - a.price);
     }
     return 0;
@@ -27,7 +27,7 @@ const Home = () => {
           <FilterMenu chooseOrder={chooseOrder} />
         </div>
         <div>
-          <ItemList orderComparator={orderComparator} order={order} />
+          <ItemList orderComparator={orderComparator} sorter={sorter} />
         </div>
       </div>
     </section>

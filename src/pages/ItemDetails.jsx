@@ -1,7 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { addItemToOrder, deleteItemFromOrder, fetchOrder } from '../redux/slices/orderSlice';
+import {
+  addAndRemoveItems, addItemToOrder, deleteItemFromOrder,
+} from '../redux/slices/orderSlice';
 import cartIcon from '../images/cart_icon.svg';
 import xIcon from '../images/x_icon.png';
 
@@ -12,15 +14,21 @@ const ItemDetails = ({ item, closeMenu }) => {
   } = useSelector((store) => store.order);
 
   const addToCart = (item) => {
-    dispatch(addItemToOrder(item)).then(() => {
-      dispatch(fetchOrder());
-    });
+    dispatch(addItemToOrder(item))
+      .unwrap()
+      .then(() => {
+        dispatch(addAndRemoveItems(item, 'addItem'));
+      })
+      .catch();
   };
 
   const removeFromCart = (item) => {
-    dispatch(deleteItemFromOrder(item)).then(() => {
-      dispatch(fetchOrder());
-    });
+    dispatch(deleteItemFromOrder(item))
+      .unwrap()
+      .then(() => {
+        dispatch(addAndRemoveItems(item, 'removeItem'));
+      })
+      .catch();
   };
 
   const showCartItemQuantity = (item) => {

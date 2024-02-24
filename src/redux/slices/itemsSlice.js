@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { NotificationManager } from 'react-notifications';
 
 const url = 'http://localhost:3000/api/v1/';
 
@@ -8,6 +9,7 @@ export const fetchTopTenItems = createAsyncThunk('items/topTen', async () => {
     const response = await axios(`${url}items/recentlyAdded`);
     return response.data;
   } catch (error) {
+    NotificationManager.error('Error loading items', 'Error');
     throw new Error('error');
   }
 });
@@ -17,6 +19,7 @@ export const fetchCategoryitems = createAsyncThunk('categories/show', async (cat
     const response = await axios(`${url}categories/${categoryId}`);
     return response.data;
   } catch (error) {
+    NotificationManager.error('Error loading items', 'Error');
     throw new Error('error');
   }
 });
@@ -26,6 +29,7 @@ export const fetchItem = createAsyncThunk('items/show', async (itemId) => {
     const response = await axios(`${url}items/${itemId}`);
     return response.data;
   } catch (error) {
+    NotificationManager.error('Error loading item', 'Error');
     throw new Error('error');
   }
 });
