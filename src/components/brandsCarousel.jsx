@@ -1,5 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -17,23 +15,23 @@ import nvidia from '../images/brands/Nvidia.png';
 const BrandCarousel = () => {
   const brands = [acer, amd, asus, hp, intel, lenovo, logitech, nvidia];
 
-  const settings = {
-    infinite: true,
-    autoplay: true,
-    speed: 2000,
-    slidesToShow: brands.length,
-    slidesToScroll: 1,
-    centerMode: false,
-  };
-
   return (
-    <Slider {...settings} className="flex items-center justify-center bg-space-cadet">
+    <Slider
+      infinite
+      autoplay
+      speed={2000}
+      slidesToShow={brands.length}
+      slidesToScroll={1}
+      centerMode
+      arrows={false}
+      className="flex items-center justify-center w-full py-4 bg-white"
+    >
       {brands.map((brand, index) => (
         <div key={brand}>
           <img
             src={brand}
             alt={`brand-${index}`}
-            className="w-16 h-16 mx-2"
+            className="mx-2 w-9 h-9 lg:w-12 lg:h-12 2xl:w-16 2xl:h-16"
           />
         </div>
       ))}
