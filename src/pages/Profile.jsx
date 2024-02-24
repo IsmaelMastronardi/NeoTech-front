@@ -12,7 +12,7 @@ const Profile = () => {
 
   return (
     <section className="flex flex-col items-center justify-center pt-20 text-fluorescent-cyan">
-      <h1 className="text-2xl text-white underline">YOUR ORDERS:</h1>
+      <h1 className="text-2xl underline text-custom-orange">YOUR ORDERS:</h1>
       <PastOrders />
     </section>
   );

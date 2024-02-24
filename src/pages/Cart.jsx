@@ -45,7 +45,7 @@ const Cart = () => {
     );
   }
   return (
-    <section className="flex flex-col items-center justify-center pt-20 text-fluorescent-cyan">
+    <section className="flex flex-col items-center justify-center pt-20 text-white">
       <div className="flex flex-col items-center justify-center gap-8 py-10">
         <h1 className="text-2xl underline text-custom-orange">
           YOUR CART
