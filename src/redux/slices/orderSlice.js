@@ -98,6 +98,7 @@ const orderSlice = createSlice({
           state.orderItems[item.id].quantity += 1;
         }
         state.itemsCount += 1;
+        state.totalPrice += item.price;
       },
     },
     removeItem: {
@@ -109,12 +110,14 @@ const orderSlice = createSlice({
           state.orderItems[item.id].quantity -= 1;
         }
         state.itemsCount -= 1;
+        state.totalPrice -= item.price;
       },
     },
     deleteItem: {
       reducer: (state, action) => {
         const item = action.payload;
         state.itemsCount -= state.orderItems[item.id].quantity;
+        state.totalPrice -= item.price * state.orderItems[item.id].quantity;
         delete state.orderItems[item.id];
       },
     },

@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import {
   addAndRemoveItems, addItemToOrder, deleteItemFromOrder,
 } from '../redux/slices/orderSlice';
-import cartIcon from '../images/cart_icon.svg';
+import cartIcon from '../images/cart_icon.png';
 import xIcon from '../images/x_icon.png';
 
 const ItemDetails = ({ item, closeMenu }) => {
@@ -32,11 +32,12 @@ const ItemDetails = ({ item, closeMenu }) => {
   };
 
   const showCartItemQuantity = (item) => {
-    if (!orderLoading && orderItems[item.id] && orderItems[item.id].quantity > 0) {
+    const amount = orderItems[item.id] ? orderItems[item.id].quantity : 0;
+    if (!orderLoading) {
       return (
         <NavLink to="/cart" className="relative h-8">
           <img src={cartIcon} alt="cart link" className="h-full" />
-          <span className="absolute top-0 px-1 text-xs font-bold rounded-full bg-custom-red left-5">{orderItems[item.id].quantity}</span>
+          <span className="absolute top-0 px-1 text-xs font-bold rounded-full bg-custom-red left-5">{amount}</span>
         </NavLink>
       );
     }
@@ -72,7 +73,11 @@ const ItemDetails = ({ item, closeMenu }) => {
               <button
                 type="button"
                 className="addButtonSmall"
-                onClick={() => addToCart(item)}
+                onClick={() => {
+                  if (!orderLoading) {
+                    addToCart(item);
+                  }
+                }}
               >
                 Add To cart
               </button>
@@ -83,15 +88,17 @@ const ItemDetails = ({ item, closeMenu }) => {
               </svg>
               )}
               {showCartItemQuantity(item)}
-              {orderItems[item.id] && orderItems[item.id].quantity > 0 && (
               <button
                 type="button"
                 className="removeButton"
-                onClick={() => removeFromCart(item)}
+                onClick={() => {
+                  if (!orderLoading && orderItems[item.id] && orderItems[item.id].quantity > 0) {
+                    removeFromCart(item);
+                  }
+                }}
               >
                 Remove
               </button>
-              )}
             </div>
           </div>
         </div>
