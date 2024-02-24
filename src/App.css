@@ -9,11 +9,11 @@ body {
 }
 
 .addButton {
-  @apply flex items-center gap-2 p-1 px-10 text-sm text-white transition-colors duration-75 rounded-sm shadow-sm bg-custom-orange shadow-custom-orange active:bg-custom-orange hover:bg-custom-orange md:px-8 md:text-lg;
+  @apply flex items-center gap-2 p-1 px-10 text-sm text-white transition-colors duration-75 rounded-sm shadow-sm bg-custom-orange shadow-custom-orange active:bg-custom-orange-dark hover:bg-custom-orange-light md:px-8 md:text-lg;
 }
 
 .addButtonSmall {
-  @apply flex items-center gap-2 p-1 px-4 text-sm text-white transition-colors duration-75 rounded-sm shadow-sm bg-custom-orange shadow-custom-orange active:bg-custom-orange hover:bg-custom-orange md:px-8 md:text-lg;
+  @apply flex items-center gap-2 p-1 px-4 text-sm text-white transition-colors duration-75 rounded-sm shadow-sm bg-custom-orange shadow-custom-orange active:bg-custom-orange-dark hover:bg-custom-orange-light md:px-8 md:text-lg;
 }
 
 .removeButton {
@@ -21,7 +21,7 @@ body {
 }
 
 .filterButton {
-  @apply flex p-1 px-12 py-3 text-white transition-colors duration-75 rounded-sm shadow-sm bg-custom-orange shadow-custom-orange active:bg-custom-orange hover:bg-custom-orange md:px-8 md:text-lg;
+  @apply flex w-full px-12 py-3 text-white transition-colors duration-75 rounded-sm shadow-sm bg-custom-orange shadow-custom-orange active:bg-custom-orange-dark hover:bg-custom-orange-light md:text-lg lg:px-20;
 }
 
 .shortHR {
@@ -48,6 +48,20 @@ body {
   @apply w-20 h-20 p-2 border-2 border-white rounded-full hover:bg-white active:bg-gray-300;
 }
 
-body.menu-open {
-  overflow: hidden;
+.menu-enter {
+  opacity: 0;
+}
+
+.menu-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.menu-exit {
+  opacity: 1;
+}
+
+.menu-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
 }
