@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { NotificationManager } from 'react-notifications';
 
 const url = 'http://localhost:3000/api/v1/';
 
@@ -9,6 +10,7 @@ export const completeOrder = createAsyncThunk('order/complete', async (order, { 
     const response = await axios.post(`${url}/users/${user.user.id}/orders/complete_order`, { order });
     return response.data;
   } catch (error) {
+    NotificationManager.error('Error completing order', 'Error');
     throw new Error(error);
   }
 });
@@ -20,6 +22,7 @@ export const fetchPastOrders = createAsyncThunk('user/fetchPastOrders', async (_
       const response = await axios.get(`${url}/users/${user.user.id}/show_past_orders`);
       return response.data;
     } catch (error) {
+      NotificationManager.error('Error loading your past orders', 'Error');
       throw new Error(error);
     }
   }
@@ -32,6 +35,7 @@ export const addItemToOrder = createAsyncThunk('order/addItemToOrder', async (it
     const response = await axios.post(`${url}users/${user.user.id}/orders/add_item`, { order_item: { item_id: item.id } });
     return response.data;
   } catch (error) {
+    NotificationManager.error('Error adding item', 'Error');
     throw new Error(error);
   }
 });
@@ -39,9 +43,21 @@ export const addItemToOrder = createAsyncThunk('order/addItemToOrder', async (it
 export const deleteItemFromOrder = createAsyncThunk('order/deleteItemFromOrder', async (item, { getState }) => {
   const { user } = getState();
   try {
+    const response = await axios.post(`${url}users/${user.user.id}/orders/remove_one_item`, { order_item: { item_id: item.id } });
+    return response.data;
+  } catch (error) {
+    NotificationManager.error('Error deleting item', 'Error');
+    throw new Error(error);
+  }
+});
+
+export const deleteAllOneItemFromOrder = createAsyncThunk('order/deleteAllOneItemFromOrder', async (item, { getState }) => {
+  const { user } = getState();
+  try {
     const response = await axios.post(`${url}users/${user.user.id}/orders/remove_item`, { order_item: { item_id: item.id } });
     return response.data;
   } catch (error) {
+    NotificationManager.error('Error deleting item', 'Error');
     throw new Error(error);
   }
 });
@@ -53,6 +69,7 @@ export const fetchOrder = createAsyncThunk('order/fetchOrder', async (_, { getSt
       const response = await axios.get(`${url}users/${user.user.id}/orders/show_current_order`);
       return response.data;
     } catch (error) {
+      NotificationManager.error('Error loading your order', 'Error');
       throw new Error(error);
     }
   }
@@ -76,7 +93,7 @@ const orderSlice = createSlice({
       reducer: (state, action) => {
         const item = action.payload;
         if (!state.orderItems[item.id]) {
-          state.orderItems[item.id] = { quantity: 1 };
+          state.orderItems[item.id] = { quantity: 1, product: item };
         } else {
           state.orderItems[item.id].quantity += 1;
         }
@@ -85,11 +102,11 @@ const orderSlice = createSlice({
     },
     removeItem: {
       reducer: (state, action) => {
-        const item = action.payload;
-        if (state.orderItems[item.name].quantity === 1) {
-          delete state.orderItems[item.name];
+        const { item } = action.payload;
+        if (state.orderItems[item.id].quantity === 1) {
+          delete state.orderItems[item.id];
         } else {
-          state.orderItems[item.name].quantity -= 1;
+          state.orderItems[item.id].quantity -= 1;
         }
         state.itemsCount -= 1;
       },
@@ -97,16 +114,13 @@ const orderSlice = createSlice({
     deleteItem: {
       reducer: (state, action) => {
         const item = action.payload;
-        state.itemsCount -= state.orderItems[item.name].quantity;
-        delete state.orderItems[item.name];
+        state.itemsCount -= state.orderItems[item.id].quantity;
+        delete state.orderItems[item.id];
       },
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(completeOrder.rejected, () => {
-        console.log('Error completing order');
-      })
       .addCase(completeOrder.fulfilled, (state, action) => {
         state.orderItems = {};
         state.itemsCount = 0;
@@ -116,10 +130,8 @@ const orderSlice = createSlice({
       .addCase(fetchPastOrders.pending, (state) => {
         state.pastOrdersLoading = true;
       })
-      .addCase(fetchPastOrders.rejected, (state, error) => {
+      .addCase(fetchPastOrders.rejected, (state) => {
         state.pastOrdersLoading = false;
-        console.log(error);
-        console.log('Error fetching past orders');
       })
       .addCase(fetchPastOrders.fulfilled, (state, action) => {
         state.pastOrdersLoading = false;
@@ -128,34 +140,35 @@ const orderSlice = createSlice({
       .addCase(addItemToOrder.pending, (state) => {
         state.orderLoading = true;
       })
-      .addCase(addItemToOrder.rejected, (state, error) => {
+      .addCase(addItemToOrder.rejected, (state) => {
         state.orderLoading = false;
-        console.log(error);
-        console.log('Error adding to cart');
       })
       .addCase(addItemToOrder.fulfilled, (state) => {
         state.orderLoading = false;
-        console.log('Item added to order');
       })
       .addCase(deleteItemFromOrder.pending, (state) => {
         state.orderLoading = true;
       })
-      .addCase(deleteItemFromOrder.rejected, (state, error) => {
+      .addCase(deleteItemFromOrder.rejected, (state) => {
         state.orderLoading = false;
-        console.log(error);
-        console.log('Error deleting from cart');
       })
       .addCase(deleteItemFromOrder.fulfilled, (state) => {
         state.orderLoading = false;
-        console.log('Item deleted from cart');
+      })
+      .addCase(deleteAllOneItemFromOrder.pending, (state) => {
+        state.orderLoading = true;
+      })
+      .addCase(deleteAllOneItemFromOrder.rejected, (state) => {
+        state.orderLoading = false;
+      })
+      .addCase(deleteAllOneItemFromOrder.fulfilled, (state) => {
+        state.orderLoading = false;
       })
       .addCase(fetchOrder.pending, (state) => {
         state.orderLoading = true;
       })
-      .addCase(fetchOrder.rejected, (state, error) => {
+      .addCase(fetchOrder.rejected, (state) => {
         state.orderLoading = false;
-        console.log(error);
-        console.log('Error fetching order');
       })
       .addCase(fetchOrder.fulfilled, (state, action) => {
         state.orderLoading = false;
@@ -171,14 +184,11 @@ const orderSlice = createSlice({
   },
 });
 
-export const addNewItemAndSave = (item, action = 'default') => (dispatch) => {
-  console.log('addNewItemAndSave');
+export const addAndRemoveItems = (item, action = 'default') => (dispatch) => {
   if (action === 'addItem') {
-    console.log('addNewItemAndSave addItem');
-    // dispatch(orderSlice.actions.addItem(item));
-    fetchOrder();
+    dispatch(orderSlice.actions.addItem(item));
   } else if (action === 'removeItem') {
-    dispatch(orderSlice.actions.removeItem(item));
+    dispatch(orderSlice.actions.removeItem({ item }));
   } else if (action === 'deleteItem') {
     dispatch(orderSlice.actions.deleteItem(item));
   }
