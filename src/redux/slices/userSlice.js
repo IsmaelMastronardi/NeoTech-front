@@ -48,12 +48,12 @@ const userSlice = createSlice({
     builder
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.loading = false;
-        [state.user] = action.payload;
+        state.user = action.payload;
         state.userFetched = true;
       })
       .addCase(createGuestUser.fulfilled, (state, action) => {
         state.loading = false;
-        [state.user] = action.payload;
+        state.user = action.payload;
         state.userFetched = true;
         saveUserToLocalStorage(state);
       });
