@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import React from 'react';
 import { completeOrder } from '../redux/slices/orderSlice';
-import CartItem from '../components/cartItem';
+import CartItem from '../components/items/cartItem';
 
 const Cart = () => {
   const dispatch = useDispatch();

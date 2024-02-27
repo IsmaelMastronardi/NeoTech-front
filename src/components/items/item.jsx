@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import cartIcon from '../images/cart_icon.png';
-import { addAndRemoveItems, addItemToOrder } from '../redux/slices/orderSlice';
+import cartIcon from '../../images/cart_icon.png';
+import { addAndRemoveItems, addItemToOrder } from '../../redux/slices/orderSlice';
 
 const Item = ({ item, toggleMenu, showItemDetails }) => {
   const {
@@ -46,14 +46,14 @@ const Item = ({ item, toggleMenu, showItemDetails }) => {
     <div className="itemContainer itemBorder">
       <li key={item.name} className="listItem">
         <button
-          className="w-2/3 h-full"
+          className="flex items-center justify-center w-2/3 h-full"
           type="button"
           onClick={() => {
             toggleMenu();
             showItemDetails(item);
           }}
         >
-          <img src={item.image} alt={item.name} className="rounded-md" />
+          <img src={item.image} alt={item.name} className="rounded-md md:h-40" />
         </button>
         <div className="flex flex-col items-start w-full">
           <p className="text-md">{item.name}</p>

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import trashIcon from '../images/trash_icon.png';
-import minusIcon from '../images/minus_icon.png';
-import plusIcon from '../images/plus_icon.png';
+import trashIcon from '../../images/trash_icon.png';
+import minusIcon from '../../images/minus_icon.png';
+import plusIcon from '../../images/plus_icon.png';
 import {
   addAndRemoveItems, addItemToOrder, deleteAllOneItemFromOrder, deleteItemFromOrder,
-} from '../redux/slices/orderSlice';
+} from '../../redux/slices/orderSlice';
 
 const CartItem = ({ product, quantity }) => {
   const orderItems = useSelector((store) => store.order.orderItems);

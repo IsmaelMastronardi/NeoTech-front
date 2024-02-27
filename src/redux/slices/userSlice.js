@@ -16,7 +16,7 @@ export const fetchUser = createAsyncThunk('user/show', async (user) => {
 
 export const createGuestUser = createAsyncThunk('user/create', async () => {
   try {
-    const response = await axios.post(`${url}users/create_temporary_user`);
+    const response = await axios.post(`${url}users/create_guest_user`);
     return response.data;
   } catch (error) {
     throw new Error(error);

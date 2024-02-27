@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTopTenItems } from '../redux/slices/itemsSlice';
+import { fetchTopTenItems } from '../../redux/slices/itemsSlice';
 import Item from './item';
-import ItemDetails from '../pages/ItemDetails';
+import ItemDetails from '../../pages/ItemDetails';
 
 const ItemList = ({ orderComparator, sorter }) => {
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ const ItemList = ({ orderComparator, sorter }) => {
           {itemsArrCopy.map((item) => (
             <div
               key={item + item.id}
-              className="flex justify-center"
+              className="flex justify-center w-full md:w-auto md:h-96"
             >
               <Item item={item} toggleMenu={toggleMenu} showItemDetails={showItemDetails} />
             </div>

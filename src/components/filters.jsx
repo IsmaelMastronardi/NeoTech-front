@@ -9,17 +9,17 @@ const FilterMenu = ({ chooseOrder }) => {
   const dispatch = useDispatch();
   const categories = [
     { name: 'All', id: 20 },
-    { name: 'Notebooks', id: 9 },
-    { name: 'Desktop', id: 10 },
-    { name: 'Processors', id: 12 },
+    { name: 'Cases', id: 9 },
+    { name: 'Mousepads', id: 10 },
     { name: 'Motherboards', id: 12 },
-    { name: 'Graphics Cards', id: 13 },
-    { name: 'Memory', id: 14 },
-    { name: 'Storage', id: 15 },
-    { name: 'Power Supplies', id: 16 },
-    { name: 'Cases', id: 17 },
-    { name: 'Cooling', id: 18 },
-    { name: 'Accessories', id: 19 },
+    { name: 'Monitors', id: 12 },
+    { name: 'power Supplies', id: 13 },
+    { name: 'Mice', id: 14 },
+    { name: 'Laptops', id: 15 },
+    { name: 'Keyboards', id: 16 },
+    { name: 'Headphones', id: 17 },
+    { name: 'Graphic Cards', id: 18 },
+    { name: 'Chairs', id: 19 },
   ];
 
   const [categoriesMenuOpen, setCategoriesMenuOpen] = useState(false);

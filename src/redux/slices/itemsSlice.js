@@ -4,9 +4,9 @@ import { NotificationManager } from 'react-notifications';
 
 const url = 'http://localhost:3000/api/v1/';
 
-export const fetchTopTenItems = createAsyncThunk('items/topTen', async () => {
+export const fetchTopTenItems = createAsyncThunk('items/recently_added', async () => {
   try {
-    const response = await axios(`${url}items/recentlyAdded`);
+    const response = await axios(`${url}items/recently_added`);
     return response.data;
   } catch (error) {
     NotificationManager.error('Error loading items', 'Error');
@@ -14,7 +14,7 @@ export const fetchTopTenItems = createAsyncThunk('items/topTen', async () => {
   }
 });
 
-export const fetchCategoryitems = createAsyncThunk('categories/show', async (categoryId) => {
+export const fetchCategoryitems = createAsyncThunk('categories/id', async (categoryId) => {
   try {
     const response = await axios(`${url}categories/${categoryId}`);
     return response.data;
@@ -24,7 +24,7 @@ export const fetchCategoryitems = createAsyncThunk('categories/show', async (cat
   }
 });
 
-export const fetchItem = createAsyncThunk('items/show', async (itemId) => {
+export const fetchItem = createAsyncThunk('items/id', async (itemId) => {
   try {
     const response = await axios(`${url}items/${itemId}`);
     return response.data;

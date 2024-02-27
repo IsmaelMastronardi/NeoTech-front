@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPastOrders } from '../redux/slices/orderSlice';
+import { fetchPastOrders } from '../../redux/slices/orderSlice';
 import PastOrder from './pastOrder';
 
 const PastOrders = () => {

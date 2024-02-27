@@ -10,16 +10,16 @@ export const completeOrder = createAsyncThunk('order/complete', async (order, { 
     const response = await axios.post(`${url}/users/${user.user.id}/orders/complete_order`, { order });
     return response.data;
   } catch (error) {
-    NotificationManager.error('Error completing order', 'Error');
+    NotificationManager.error('Error completing order', error);
     throw new Error(error);
   }
 });
 
-export const fetchPastOrders = createAsyncThunk('user/fetchPastOrders', async (_, { getState }) => {
+export const fetchPastOrders = createAsyncThunk('order/fetchPastOrders', async (_, { getState }) => {
   const { user } = getState();
   if (user) {
     try {
-      const response = await axios.get(`${url}/users/${user.user.id}/show_past_orders`);
+      const response = await axios.get(`${url}/users/${user.user.id}/orders/show_past_orders`);
       return response.data;
     } catch (error) {
       NotificationManager.error('Error loading your past orders', 'Error');
@@ -35,7 +35,7 @@ export const addItemToOrder = createAsyncThunk('order/addItemToOrder', async (it
     const response = await axios.post(`${url}users/${user.user.id}/orders/add_item`, { order_item: { item_id: item.id } });
     return response.data;
   } catch (error) {
-    NotificationManager.error('Error adding item', 'Error');
+    NotificationManager.error('Error adding item', error);
     throw new Error(error);
   }
 });
@@ -57,23 +57,20 @@ export const deleteAllOneItemFromOrder = createAsyncThunk('order/deleteAllOneIte
     const response = await axios.post(`${url}users/${user.user.id}/orders/remove_item`, { order_item: { item_id: item.id } });
     return response.data;
   } catch (error) {
-    NotificationManager.error('Error deleting item', 'Error');
+    NotificationManager.error('Error deleting item', error);
     throw new Error(error);
   }
 });
 
 export const fetchOrder = createAsyncThunk('order/fetchOrder', async (_, { getState }) => {
   const { user } = getState();
-  if (!user.loadig) {
-    try {
-      const response = await axios.get(`${url}users/${user.user.id}/orders/show_current_order`);
-      return response.data;
-    } catch (error) {
-      NotificationManager.error('Error loading your order', 'Error');
-      throw new Error(error);
-    }
+  try {
+    const response = await axios.get(`${url}users/${user.user.id}/orders/show_current_order`);
+    return response.data;
+  } catch (error) {
+    NotificationManager.error('Error loading your order', error);
+    throw new Error(error);
   }
-  throw new Error('User not loaded');
 });
 
 const initialState = {
@@ -124,11 +121,9 @@ const orderSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(completeOrder.fulfilled, (state, action) => {
+      .addCase(completeOrder.fulfilled, (state) => {
         state.orderItems = {};
         state.itemsCount = 0;
-        state.pastOrdersArray = [action.payload[2]];
-        state.pastOrdersLoading = true;
       })
       .addCase(fetchPastOrders.pending, (state) => {
         state.pastOrdersLoading = true;
