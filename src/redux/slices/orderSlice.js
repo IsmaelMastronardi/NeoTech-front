@@ -15,11 +15,11 @@ export const completeOrder = createAsyncThunk('order/complete', async (order, { 
   }
 });
 
-export const fetchPastOrders = createAsyncThunk('user/fetchPastOrders', async (_, { getState }) => {
+export const fetchPastOrders = createAsyncThunk('order/fetchPastOrders', async (_, { getState }) => {
   const { user } = getState();
   if (user) {
     try {
-      const response = await axios.get(`${url}/users/${user.user.id}/show_past_orders`);
+      const response = await axios.get(`${url}/users/${user.user.id}/orders/show_past_orders`);
       return response.data;
     } catch (error) {
       NotificationManager.error('Error loading your past orders', 'Error');
@@ -33,47 +33,47 @@ export const addItemToOrder = createAsyncThunk('order/addItemToOrder', async (it
   const { user } = getState();
   try {
     const response = await axios.post(`${url}users/${user.user.id}/orders/add_item`, { order_item: { item_id: item.id } });
-    return response.data;
+    return response;
   } catch (error) {
     NotificationManager.error('Error adding item', 'Error');
-    throw new Error(error);
+    console.log(error);
+    return null;
   }
 });
 
 export const deleteItemFromOrder = createAsyncThunk('order/deleteItemFromOrder', async (item, { getState }) => {
   const { user } = getState();
   try {
-    const response = await axios.post(`${url}users/${user.user.id}/orders/remove_one_item`, { order_item: { item_id: item.id } });
+    const response = await axios.delete(`${url}users/${user.user.id}/orders/remove_one_item`, {
+      data: { order_item: { item_id: item.id } },
+    });
     return response.data;
   } catch (error) {
     NotificationManager.error('Error deleting item', 'Error');
-    throw new Error(error);
+    return null;
   }
 });
 
 export const deleteAllOneItemFromOrder = createAsyncThunk('order/deleteAllOneItemFromOrder', async (item, { getState }) => {
   const { user } = getState();
   try {
-    const response = await axios.post(`${url}users/${user.user.id}/orders/remove_item`, { order_item: { item_id: item.id } });
+    const response = await axios.delete(`${url}users/${user.user.id}/orders/remove_item`, { data: { order_item: { item_id: item.id } } });
     return response.data;
   } catch (error) {
     NotificationManager.error('Error deleting item', 'Error');
-    throw new Error(error);
+    return null;
   }
 });
 
 export const fetchOrder = createAsyncThunk('order/fetchOrder', async (_, { getState }) => {
   const { user } = getState();
-  if (!user.loadig) {
-    try {
-      const response = await axios.get(`${url}users/${user.user.id}/orders/show_current_order`);
-      return response.data;
-    } catch (error) {
-      NotificationManager.error('Error loading your order', 'Error');
-      throw new Error(error);
-    }
+  try {
+    const response = await axios.get(`${url}users/${user.user.id}/orders/show_current_order`);
+    return response.data;
+  } catch (error) {
+    NotificationManager.error('Error loading your order', 'Error');
+    throw new Error(error);
   }
-  throw new Error('User not loaded');
 });
 
 const initialState = {
@@ -124,11 +124,9 @@ const orderSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(completeOrder.fulfilled, (state, action) => {
+      .addCase(completeOrder.fulfilled, (state) => {
         state.orderItems = {};
         state.itemsCount = 0;
-        state.pastOrdersArray = [action.payload[2]];
-        state.pastOrdersLoading = true;
       })
       .addCase(fetchPastOrders.pending, (state) => {
         state.pastOrdersLoading = true;

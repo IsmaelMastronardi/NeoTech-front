@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import PastOrders from '../components/pastOrders';
+import PastOrders from '../components/orders/pastOrders';
 
 const Profile = () => {
   const { loading } = useSelector((store) => store.user);

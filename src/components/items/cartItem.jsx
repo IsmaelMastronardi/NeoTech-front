@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import trashIcon from '../images/trash_icon.png';
-import minusIcon from '../images/minus_icon.png';
-import plusIcon from '../images/plus_icon.png';
+import trashIcon from '../../images/trash_icon.png';
+import minusIcon from '../../images/minus_icon.png';
+import plusIcon from '../../images/plus_icon.png';
 import {
   addAndRemoveItems, addItemToOrder, deleteAllOneItemFromOrder, deleteItemFromOrder,
-} from '../redux/slices/orderSlice';
+} from '../../redux/slices/orderSlice';
 
 const CartItem = ({ product, quantity }) => {
   const orderItems = useSelector((store) => store.order.orderItems);
@@ -86,9 +86,9 @@ const CartItem = ({ product, quantity }) => {
               />
             </button>
           </div>
-          <div className="flex flex-col items-center w-full gap-2">
-            <div className="w-9/12">
-              <img src={product.image} alt={`${product.name}`} className="rounded-md " />
+          <div className="flex flex-col items-center justify-center w-full gap-2">
+            <div className="flex justify-center w-9/12">
+              <img src={product.image} alt={`${product.name}`} className="rounded-md md:h-40" />
             </div>
             <div className="flex justify-center w-full min-w-0">
               <p className="py-2 text-2xl truncate">{product.description}</p>

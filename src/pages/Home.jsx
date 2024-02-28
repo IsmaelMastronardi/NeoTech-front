@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import { useState } from 'react';
-import ItemList from '../components/itemList';
+import ItemList from '../components/items/itemList';
 import FilterMenu from '../components/filters';
 
 const Home = () => {
