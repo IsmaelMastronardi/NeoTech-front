@@ -10,7 +10,7 @@ export const completeOrder = createAsyncThunk('order/complete', async (order, { 
     const response = await axios.post(`${url}/users/${user.user.id}/orders/complete_order`, { order });
     return response.data;
   } catch (error) {
-    NotificationManager.error('Error completing order', error);
+    NotificationManager.error('Error completing order', 'Error');
     throw new Error(error);
   }
 });
@@ -33,32 +33,35 @@ export const addItemToOrder = createAsyncThunk('order/addItemToOrder', async (it
   const { user } = getState();
   try {
     const response = await axios.post(`${url}users/${user.user.id}/orders/add_item`, { order_item: { item_id: item.id } });
-    return response.data;
+    return response;
   } catch (error) {
-    NotificationManager.error('Error adding item', error);
-    throw new Error(error);
+    NotificationManager.error('Error adding item', 'Error');
+    console.log(error);
+    return null;
   }
 });
 
 export const deleteItemFromOrder = createAsyncThunk('order/deleteItemFromOrder', async (item, { getState }) => {
   const { user } = getState();
   try {
-    const response = await axios.post(`${url}users/${user.user.id}/orders/remove_one_item`, { order_item: { item_id: item.id } });
+    const response = await axios.delete(`${url}users/${user.user.id}/orders/remove_one_item`, {
+      data: { order_item: { item_id: item.id } },
+    });
     return response.data;
   } catch (error) {
     NotificationManager.error('Error deleting item', 'Error');
-    throw new Error(error);
+    return null;
   }
 });
 
 export const deleteAllOneItemFromOrder = createAsyncThunk('order/deleteAllOneItemFromOrder', async (item, { getState }) => {
   const { user } = getState();
   try {
-    const response = await axios.post(`${url}users/${user.user.id}/orders/remove_item`, { order_item: { item_id: item.id } });
+    const response = await axios.delete(`${url}users/${user.user.id}/orders/remove_item`, { data: { order_item: { item_id: item.id } } });
     return response.data;
   } catch (error) {
-    NotificationManager.error('Error deleting item', error);
-    throw new Error(error);
+    NotificationManager.error('Error deleting item', 'Error');
+    return null;
   }
 });
 
@@ -68,7 +71,7 @@ export const fetchOrder = createAsyncThunk('order/fetchOrder', async (_, { getSt
     const response = await axios.get(`${url}users/${user.user.id}/orders/show_current_order`);
     return response.data;
   } catch (error) {
-    NotificationManager.error('Error loading your order', error);
+    NotificationManager.error('Error loading your order', 'Error');
     throw new Error(error);
   }
 });

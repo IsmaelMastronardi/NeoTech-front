@@ -7,6 +7,10 @@ const url = 'http://localhost:3000/api/v1/';
 export const fetchUser = createAsyncThunk('user/show', async (user) => {
   try {
     const response = await axios(`${url}users/${user.id}`);
+    if (!response.status === 200) {
+      NotificationManager.error('Something went wrong', 'Fail', 1250);
+      throw new Error('Error registering user');
+    }
     return response.data;
   } catch (error) {
     NotificationManager.error('Error loding user', 'Error');
@@ -28,7 +32,7 @@ const saveUserToLocalStorage = (state) => {
     const serializedState = JSON.stringify(state.user);
     localStorage.setItem('userState', serializedState);
   } catch (error) {
-    console.error('Error saving state to local storage:', error);
+    NotificationManager.error('Error saving state to local storage:');
   }
 };
 

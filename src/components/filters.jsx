@@ -3,23 +3,23 @@
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { fetchCategoryitems, fetchTopTenItems } from '../redux/slices/itemsSlice';
+import { fetchCategoryItems, fetchTopTenItems } from '../redux/slices/itemsSlice';
 
 const FilterMenu = ({ chooseOrder }) => {
   const dispatch = useDispatch();
   const categories = [
-    { name: 'All', id: 20 },
-    { name: 'Cases', id: 9 },
-    { name: 'Mousepads', id: 10 },
-    { name: 'Motherboards', id: 12 },
-    { name: 'Monitors', id: 12 },
-    { name: 'power Supplies', id: 13 },
-    { name: 'Mice', id: 14 },
-    { name: 'Laptops', id: 15 },
-    { name: 'Keyboards', id: 16 },
-    { name: 'Headphones', id: 17 },
-    { name: 'Graphic Cards', id: 18 },
-    { name: 'Chairs', id: 19 },
+    { name: 'All', id: 0 },
+    { name: 'Cases', id: 1 },
+    { name: 'Mousepads', id: 2 },
+    { name: 'Motherboards', id: 3 },
+    { name: 'Monitors', id: 4 },
+    { name: 'power Supplies', id: 5 },
+    { name: 'Mice', id: 6 },
+    { name: 'Laptops', id: 7 },
+    { name: 'Keyboards', id: 8 },
+    { name: 'Headphones', id: 9 },
+    { name: 'Graphic Cards', id: 10 },
+    { name: 'Chairs', id: 11 },
   ];
 
   const [categoriesMenuOpen, setCategoriesMenuOpen] = useState(false);
@@ -38,7 +38,7 @@ const FilterMenu = ({ chooseOrder }) => {
       dispatch(fetchTopTenItems());
       toggleMenu();
     } else {
-      dispatch(fetchCategoryitems(id));
+      dispatch(fetchCategoryItems(id));
       toggleMenu();
     }
   };

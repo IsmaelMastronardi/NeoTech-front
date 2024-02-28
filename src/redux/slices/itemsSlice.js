@@ -14,7 +14,7 @@ export const fetchTopTenItems = createAsyncThunk('items/recently_added', async (
   }
 });
 
-export const fetchCategoryitems = createAsyncThunk('categories/id', async (categoryId) => {
+export const fetchCategoryItems = createAsyncThunk('categories/id', async (categoryId) => {
   try {
     const response = await axios(`${url}categories/${categoryId}`);
     return response.data;
@@ -51,7 +51,7 @@ const itemSlice = createSlice({
         state.itemsArr = action.payload;
         state.itemsLoading = false;
       })
-      .addCase(fetchCategoryitems.fulfilled, (state, action) => {
+      .addCase(fetchCategoryItems.fulfilled, (state, action) => {
         state.itemsArr = action.payload;
         state.itemsLoading = false;
       })

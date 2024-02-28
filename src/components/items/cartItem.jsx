@@ -86,9 +86,9 @@ const CartItem = ({ product, quantity }) => {
               />
             </button>
           </div>
-          <div className="flex flex-col items-center w-full gap-2">
-            <div className="w-9/12">
-              <img src={product.image} alt={`${product.name}`} className="rounded-md " />
+          <div className="flex flex-col items-center justify-center w-full gap-2">
+            <div className="flex justify-center w-9/12">
+              <img src={product.image} alt={`${product.name}`} className="rounded-md md:h-40" />
             </div>
             <div className="flex justify-center w-full min-w-0">
               <p className="py-2 text-2xl truncate">{product.description}</p>

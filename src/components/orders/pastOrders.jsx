@@ -26,7 +26,7 @@ const PastOrders = () => {
   return (
     <div className="flex justify-center w-full">
       <ul className="flex flex-col items-center justify-center w-10/12 gap-16 py-10 mt-4">
-        {pastOrdersArray.map((order) => (
+        {pastOrdersArray.slice().reverse().map((order) => (
           <PastOrder order={order} key={order + order.id} />
         ))}
       </ul>

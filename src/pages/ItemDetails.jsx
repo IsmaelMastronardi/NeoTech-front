@@ -51,14 +51,16 @@ const ItemDetails = ({ item, closeMenu }) => {
           <button className="z-40 right-2 top-2 hiddden md:absolute" type="button" onClick={closeMenu}>
             <img src={xIcon} alt="close" className="hidden w-8 h-8 md:block" />
           </button>
-          <div className="relative flex flex-col justify-center w-full h-full">
+          <div className="relative flex flex-col items-center justify-center w-full h-full">
             <button className="absolute right-2 top-2 md:hidden" type="button" onClick={closeMenu}>
               <img src={xIcon} alt="close" className="w-8 h-8" />
             </button>
-            <img src={item.image} alt={item.name} className="w-full rounded-t-md lg:rounded-md" />
+            <div className="object-contain w-2/3 mt-10">
+              <img src={item.image} alt={item.name} className="w-full rounded-t-md lg:rounded-md" />
+            </div>
             <hr className="w-11/12 h-1 mx-auto mt-2 mb-2 bg-gray-400 border-0 rounded dark:bg-gray-700 lg:hidden" />
           </div>
-          <div className="flex flex-col items-center w-full h-full gap-2 text-center lg:justify-center md:gap-4 xl:gap-8 2xl:gap-8">
+          <div className="flex flex-col items-center w-full h-full gap-2 text-center lg:justify-center md:gap-4 xl:gap-8 2xl:gap-8 lg:mr-10 lg:py-10">
             <hr className="hidden mt-2 shortHR lg:hidden" />
             <h1 className="text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl">{item.name}</h1>
             <hr className="shortHR" />

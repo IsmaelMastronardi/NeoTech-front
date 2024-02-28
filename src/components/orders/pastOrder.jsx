@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const PartOrder = ({ order }) => {
@@ -14,7 +13,7 @@ const PartOrder = ({ order }) => {
   };
 
   return (
-    <li key={order.id} className="flex flex-col w-full gap-4 px-4 text-white rounded-md bg-light-black lg:w-9/12 2xl:w-7/12 itemBorder">
+    <li key={order.id} className="flex flex-col w-full gap-4 px-4 py-10 text-white rounded-md bg-light-black lg:w-9/12 2xl:w-7/12 itemBorder">
       <h3 className="text-2xl text-custom-orange">
         Order Number:
         {' '}
@@ -38,13 +37,13 @@ const PartOrder = ({ order }) => {
       </div>
       <ul className={menuOpen === true ? 'flex flex-col items-center justify-center w-full gap-2 md:flex-row md:flex-wrap md:gap-10' : 'hidden'}>
         {order.order_items.map((orderItem) => (
-          <NavLink to={`/${orderItem.item.id}`} key={orderItem.item.id} className="itemContainer">
-            <div className="flex flex-col items-center justify-center w-full bg-black-1">
+          <div key={orderItem.item.id} className="itemContainer">
+            <div className="flex flex-col items-center justify-center w-full px-4 rounded-lg bg-black-1">
               <p className="text-xl text-custom-orange">
                 {orderItem.item.name}
               </p>
               <div className="">
-                <img src={orderItem.item.image} alt={orderItem.item.name} className="rounded-r-md" />
+                <img src={orderItem.item.image} alt={orderItem.item.name} className="h-40 rounded-r-md" />
                 <div className="flex flex-col gap-4 pt-4 text-lg">
                   <p>
                     Quantity:
@@ -60,7 +59,7 @@ const PartOrder = ({ order }) => {
                 </div>
               </div>
             </div>
-          </NavLink>
+          </div>
         ))}
       </ul>
     </li>
