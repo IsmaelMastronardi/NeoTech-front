@@ -2,8 +2,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import axios from 'axios';
 import itemReducer, {
   fetchTopTenItems,
-  fetchCategoryitems,
   fetchItem,
+  fetchCategoryItems,
 } from '../itemsSlice';
 
 jest.mock('axios');
@@ -46,7 +46,7 @@ describe('itemSlice', () => {
     const responseData = [{ id: 1, name: 'Item 1' }, { id: 2, name: 'Item 2' }];
     axios.mockResolvedValueOnce({ data: responseData });
 
-    await store.dispatch(fetchCategoryitems(categoryId));
+    await store.dispatch(fetchCategoryItems(categoryId));
 
     const state = store.getState().items;
     expect(state.itemsLoading).toBeFalsy();
