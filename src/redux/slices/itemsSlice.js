@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 
-const url = 'http://localhost:3000/api/v1/';
+const url = 'https://neotech-back.onrender.com/api/v1/';
 
 export const fetchTopTenItems = createAsyncThunk('items/recently_added', async () => {
   try {

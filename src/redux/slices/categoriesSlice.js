@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 
-const url = 'http://localhost:3000/api/v1/categories';
+const url = 'https://neotech-back.onrender.com/api/v1/categories';
 
 export const fetchCategories = createAsyncThunk('categories/index', async () => {
   try {

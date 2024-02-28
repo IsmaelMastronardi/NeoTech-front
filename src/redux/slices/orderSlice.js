@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 
-const url = 'http://localhost:3000/api/v1/';
+const url = 'https://neotech-back.onrender.com/api/v1/';
 
 export const completeOrder = createAsyncThunk('order/complete', async (order, { getState }) => {
   const { user } = getState();
@@ -36,7 +36,6 @@ export const addItemToOrder = createAsyncThunk('order/addItemToOrder', async (it
     return response;
   } catch (error) {
     NotificationManager.error('Error adding item', 'Error');
-    console.log(error);
     return null;
   }
 });
