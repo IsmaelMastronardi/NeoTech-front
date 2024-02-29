@@ -1,28 +1,17 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable react/prop-types */
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
+import PropTypes from 'prop-types';
 import { fetchCategoryItems, fetchTopTenItems } from '../redux/slices/itemsSlice';
+import { fetchCategories } from '../redux/slices/categoriesSlice';
 
 const FilterMenu = ({ chooseOrder }) => {
   const dispatch = useDispatch();
-  const categories = [
-    { name: 'All', id: 0 },
-    { name: 'Cases', id: 1 },
-    { name: 'Mousepads', id: 2 },
-    { name: 'Motherboards', id: 3 },
-    { name: 'Monitors', id: 4 },
-    { name: 'power Supplies', id: 5 },
-    { name: 'Mice', id: 6 },
-    { name: 'Laptops', id: 7 },
-    { name: 'Keyboards', id: 8 },
-    { name: 'Headphones', id: 9 },
-    { name: 'Graphic Cards', id: 10 },
-    { name: 'Chairs', id: 11 },
-  ];
-
+  const { categoriesArr, categoriesLoading } = useSelector((store) => store.categories);
   const [categoriesMenuOpen, setCategoriesMenuOpen] = useState(false);
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, []);
 
   const toggleMenu = () => {
     setCategoriesMenuOpen(!categoriesMenuOpen);
@@ -61,20 +50,22 @@ const FilterMenu = ({ chooseOrder }) => {
         >
           <div className="absolute left-0 right-0 z-10 bg-white top-14">
             <ul className="flex flex-col gap-2">
-              {categories.map((category) => (
-                <li key={category.name} className="p-2 border-b border-black-1">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      changeCategory(category.name, category.id);
-                      toggleMenu();
-                    }}
-                    className="text-black"
-                  >
-                    {category.name}
-                  </button>
-                </li>
-              ))}
+              {!categoriesLoading && (
+                categoriesArr.map((category) => (
+                  <li key={category.name} className="p-2 border-b border-black-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        changeCategory(category.name, category.id);
+                        toggleMenu();
+                      }}
+                      className="text-black"
+                    >
+                      {category.name}
+                    </button>
+                  </li>
+                ))
+              )}
             </ul>
           </div>
         </CSSTransition>
@@ -114,6 +105,10 @@ const FilterMenu = ({ chooseOrder }) => {
       </div>
     </div>
   );
+};
+
+FilterMenu.propTypes = {
+  chooseOrder: PropTypes.func.isRequired,
 };
 
 export default FilterMenu;
